@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Primăria Pociumbăuți - Oficial</title>
+    <meta name="description" content="Site-ul oficial al Primăriei comunei Pociumbăuți, raionul Rîșcani. Transparență decizională, istorie și servicii publice." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Onest', '-apple-system', 'BlinkMacSystemFont', 'Arial', 'sans-serif'],
+              serif: ['Times New Roman', 'serif'],
+            },
+            colors: {
+              moldova: {
+                blue: '#3498db', // Institutional Blue
+                gold: '#FFD700', // Moldova Gold
+                red: '#C8102E',  // Moldova Red
+                charcoal: '#2C3E50', // Primary Text
+                steel: '#7F8C8D',    // Secondary Text
+                cloud: '#F5F7FA',    // Light BG
+              }
+            },
+            animation: {
+              'ken-burns': 'kenburns 20s ease-out infinite alternate',
+              'fade-in-up': 'fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+              'fade-in': 'fadeIn 0.8s ease-out forwards',
+              'spin-slow': 'spin 3s linear infinite',
+            },
+            keyframes: {
+              kenburns: {
+                '0%': { transform: 'scale(1)' },
+                '100%': { transform: 'scale(1.15)' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(30px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              }
+            },
+            boxShadow: {
+              'soft': '0 4px 20px rgba(0,0,0,0.08)',
+              'hover': '0 8px 24px rgba(0,0,0,0.12)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Modern Elegance Glassmorphism */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px) saturate(180%);
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+      
+      .glass-card:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .glass-card-dark {
+        background: rgba(44, 62, 80, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+      }
+
+      /* Text Selection */
+      ::selection {
+        background: #3498db;
+        color: white;
+      }
+      
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.1/",
+    "react": "https://esm.sh/react@^19.2.1",
+    "lucide-react": "https://esm.sh/lucide-react@^0.560.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.1/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-white text-moldova-charcoal font-sans antialiased">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

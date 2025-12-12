@@ -1,0 +1,27 @@
+# Securitate pentru directorul de uploads
+# Primăria Pociumbăuți
+
+# Dezactivăm executarea scripturilor PHP
+<FilesMatch "\.php$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Dezactivăm executarea oricăror scripturi
+Options -ExecCGI
+AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
+
+# Permitem doar anumite tipuri de fișiere
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|pdf|doc|docx)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevenim listarea directoarelor
+Options -Indexes
+
+# Prevenim accesul la fișiere ascunse
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
