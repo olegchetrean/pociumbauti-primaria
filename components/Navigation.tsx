@@ -102,7 +102,7 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
             </span>
             <span className="flex items-center gap-1">
               <MapPin size={12} />
-              MD-5632, Pociumbăuți, Raionul Rîșcani
+              Str. Pociumbăuțenilor 18
             </span>
           </div>
           <div className="flex items-center gap-4">

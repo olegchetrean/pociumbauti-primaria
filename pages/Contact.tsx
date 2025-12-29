@@ -1,10 +1,77 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CONTACT_INFO } from '../constants';
 import { MapPin, Phone, Mail, Clock, UserCheck } from 'lucide-react';
+
+// Leaflet types
+declare global {
+  interface Window {
+    L: any;
+  }
+}
 
 interface Props { highContrast: boolean; }
 
 export const Contact: React.FC<Props> = ({ highContrast }) => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    // Load Leaflet CSS and JS dynamically
+    const loadLeaflet = () => {
+      if (window.L) {
+        return Promise.resolve();
+      }
+
+      return new Promise<void>((resolve) => {
+        // Load CSS
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+        link.crossOrigin = '';
+        document.head.appendChild(link);
+
+        // Load JS
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+        script.crossOrigin = '';
+        script.onload = () => resolve();
+        document.body.appendChild(script);
+      });
+    };
+
+    if (mapRef.current && !mapInstanceRef.current) {
+      loadLeaflet().then(() => {
+        if (window.L && mapRef.current) {
+          const map = window.L.map(mapRef.current).setView(
+            [CONTACT_INFO.coordinates!.lat, CONTACT_INFO.coordinates!.lng],
+            15
+          );
+
+          window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19,
+          }).addTo(map);
+
+          window.L.marker([CONTACT_INFO.coordinates!.lat, CONTACT_INFO.coordinates!.lng])
+            .addTo(map)
+            .bindPopup(`<strong>Primăria Comunei Pociumbăuți</strong><br>${CONTACT_INFO.address}`)
+            .openPopup();
+
+          mapInstanceRef.current = map;
+        }
+      });
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className={`text-3xl font-bold mb-8 text-center ${highContrast ? 'text-yellow-400' : 'text-gray-900'}`}>
@@ -64,15 +131,24 @@ export const Contact: React.FC<Props> = ({ highContrast }) => {
           </div>
         </div>
 
-        {/* Map Placeholder & Form */}
+        {/* Map & Form */}
         <div className="space-y-8">
-            <div className={`h-64 rounded-xl overflow-hidden flex items-center justify-center border-2 ${highContrast ? 'bg-gray-800 border-yellow-400' : 'bg-gray-200 border-white'}`}>
-                {/* Embed OpenStreetMap via iframe in real usage, placeholder here */}
-                <div className="text-center p-4">
-                    <MapPin size={48} className="mx-auto mb-2 opacity-50" />
-                    <p className="font-bold">Harta Satului Pociumbăuți</p>
-                    <p className="text-sm">Lat: 47.9958° N, Long: 27.3236° E</p>
-                </div>
+            <div className={`rounded-xl overflow-hidden border-2 ${highContrast ? 'border-yellow-400' : 'border-gray-200'}`}>
+                <div 
+                    ref={mapRef} 
+                    style={{ height: '400px', width: '100%' }}
+                    className="z-0"
+                />
+            </div>
+            <div className="text-center">
+                <a
+                    href={`https://www.openstreetmap.org/?mlat=${CONTACT_INFO.coordinates!.lat}&mlon=${CONTACT_INFO.coordinates!.lng}&zoom=15`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-sm hover:underline ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}
+                >
+                    Vezi hartă mai mare →
+                </a>
             </div>
 
             <div className={`p-6 rounded-xl border ${highContrast ? 'bg-gray-900 border-yellow-400 text-white' : 'bg-white border-gray-200 shadow-sm'}`}>

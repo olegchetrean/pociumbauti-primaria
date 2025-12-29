@@ -5,10 +5,10 @@ import { ContactInfo, Decision, Announcement, Disposition, StaffMember, AdminLog
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const CONTACT_INFO: ContactInfo = {
-  address: "MD-5632, Pociumbăuți, Raionul Rîșcani, Republica Moldova",
+  address: "Str. Pociumbăuțenilor 18",
   postalCode: "MD-5632",
   phoneMayor: "+373 256 73421",
-  phoneSecretary: "+373 256 73196",
+  phoneSecretary: "+373 671 06938",
   email: "primaria.pociumbauti@gov.md",
   emailMayor: "primar.pociumbauti@gov.md",
   emailSecretary: "secretar.pociumbauti@gov.md",
@@ -333,7 +333,7 @@ export const HISTORY_EVENTS: HistoryEvent[] = [
   {
     year: "2023",
     title: "Alegeri Locale",
-    description: "La 5 noiembrie, Lorentii Lisevici (PSRM) este ales primar. Consiliul Local are 9 membri din 4 formațiuni politice.",
+    description: "La 5 noiembrie, Lorentii Lisevici (PSRM) este ales primar. Consiliul Local are 9 membri din 3 formațiuni politice (PSRM: 4 mandate, PAS: 3 mandate, PSDE: 2 mandate).",
     period: "Epoca Modernă"
   },
   {
@@ -452,7 +452,7 @@ export const INSTITUTIONS: Institution[] = [
     id: "primaria",
     nume: "Primăria Comunei Pociumbăuți",
     tip: "Administrație publică locală",
-    adresa: "MD-5632, Pociumbăuți, Raionul Rîșcani",
+    adresa: "Str. Pociumbautenilor 18",
     telefon: "+373 256 73421",
     email: "primaria.pociumbauti@gov.md",
     program: "Luni-Vineri: 08:00-17:00 (Pauză 12:00-13:00)",
@@ -561,7 +561,7 @@ export const STAFF: StaffMember[] = [
     id: "secretary",
     name: "Irina",
     role: "Secretarul Consiliului Local",
-    phone: "+373 256 73196",
+    phone: "+373 671 06938",
     email: "secretar.pociumbauti@gov.md",
     image: "https://picsum.photos/200/200?random=2",
     bio: "Cu peste 20 de ani experiență în administrația publică locală, Irina asigură funcționarea zilnică a primăriei și legătura cu cetățenii."
@@ -576,19 +576,18 @@ export const COUNCIL_MEMBERS: CouncilMember[] = [
   { id: "c1", name: "Consilier 1", partid: "PSRM", functie: "Consilier" },
   { id: "c2", name: "Consilier 2", partid: "PSRM", functie: "Consilier" },
   { id: "c3", name: "Consilier 3", partid: "PSRM", functie: "Consilier" },
-  { id: "c4", name: "Consilier 4", partid: "PAS", functie: "Consilier" },
+  { id: "c4", name: "Consilier 4", partid: "PSRM", functie: "Consilier" },
   { id: "c5", name: "Consilier 5", partid: "PAS", functie: "Consilier" },
   { id: "c6", name: "Consilier 6", partid: "PAS", functie: "Consilier" },
-  { id: "c7", name: "Consilier 7", partid: "PSDE", functie: "Consilier" },
+  { id: "c7", name: "Consilier 7", partid: "PAS", functie: "Consilier" },
   { id: "c8", name: "Consilier 8", partid: "PSDE", functie: "Consilier" },
-  { id: "c9", name: "Guzun Artur", partid: "Independent", functie: "Consilier" }
+  { id: "c9", name: "Consilier 9", partid: "PSDE", functie: "Consilier" }
 ];
 
 export const COUNCIL_COMPOSITION = [
-  { partid: "PSRM", mandate: 3, procent: 33.3, culoare: "#C8102E" },
+  { partid: "PSRM", mandate: 4, procent: 44.4, culoare: "#C8102E" },
   { partid: "PAS", mandate: 3, procent: 33.3, culoare: "#FFD700" },
-  { partid: "PSDE", mandate: 2, procent: 22.2, culoare: "#3498db" },
-  { partid: "Independent", mandate: 1, procent: 11.1, culoare: "#7F8C8D" }
+  { partid: "PSDE", mandate: 2, procent: 22.2, culoare: "#3498db" }
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
