@@ -20,7 +20,7 @@ export const Transparency: React.FC<Props> = ({ highContrast }) => {
                <h2 className="text-2xl font-bold">Buget Local</h2>
             </div>
             <p className="mb-6 opacity-80">
-              Bugetul comunei Pociumbăuți pentru anul 2025 este estimat la 3.200.000 MDL.
+              Bugetul satul Pociumbăuți pentru anul 2025 este estimat la 3.200.000 MDL.
               Principalele surse de venit și direcții de cheltuieli.
             </p>
             <ul className="space-y-3 mb-6">

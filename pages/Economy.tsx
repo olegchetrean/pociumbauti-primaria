@@ -26,7 +26,7 @@ export const Economy: React.FC<Props> = ({ highContrast }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 flex items-center justify-center">
           <div className="text-center text-white">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Economie și Agricultură</h1>
-            <p className="text-xl opacity-90">Agricultura - backbone-ul economic al comunei Pociumbăuți</p>
+            <p className="text-xl opacity-90">Agricultura - backbone-ul economic al satul Pociumbăuți</p>
           </div>
         </div>
       </section>

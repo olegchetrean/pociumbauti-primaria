@@ -513,7 +513,7 @@ $csrf_token = generate_csrf_token();
         <div class="login-brand-side">
             <div class="brand-content">
                 <h2>Bine ați revenit!</h2>
-                <p>Gestionați cu încredere informațiile comunei Pociumbăuți</p>
+                <p>Gestionați cu încredere informațiile satul Pociumbăuți</p>
             </div>
         </div>
     </div>

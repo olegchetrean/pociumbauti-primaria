@@ -116,7 +116,7 @@ export const History: React.FC<Props> = ({ highContrast }) => {
               <div className="flex items-center gap-3 mb-4">
                 <Award className="text-amber-500" size={32} />
                 <h3 className={`text-2xl font-bold ${highContrast ? 'text-white' : 'text-moldova-charcoal'}`}>
-                  Stema Comunei
+                  Stema Satul
                 </h3>
               </div>
               <p className={`mb-4 ${textClass}`}>{OFFICIAL_SYMBOLS.stema.descriere}</p>
@@ -145,7 +145,7 @@ export const History: React.FC<Props> = ({ highContrast }) => {
               <div className="flex items-center gap-3 mb-4">
                 <Flag className="text-moldova-blue" size={32} />
                 <h3 className={`text-2xl font-bold ${highContrast ? 'text-white' : 'text-moldova-charcoal'}`}>
-                  Drapelul Comunei
+                  Drapelul Satul
                 </h3>
               </div>
               <p className={`mb-4 ${textClass}`}>{OFFICIAL_SYMBOLS.drapel.descriere}</p>

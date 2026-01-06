@@ -59,7 +59,7 @@ export const Home: React.FC<HomeProps> = ({ setView, highContrast }) => {
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 z-10">
           <div className="animate-fade-in-up max-w-4xl mx-auto">
             <h1 className={`text-4xl md:text-6xl font-bold mb-4 tracking-tight leading-tight drop-shadow-lg ${highContrast ? 'text-yellow-400' : 'text-white'}`} style={{ letterSpacing: '0.05em' }}>
-              Bine ați venit în comuna Pociumbăuți
+              Bine ați venit în satul Pociumbăuți
             </h1>
             <p className={`text-xl md:text-2xl mb-12 tracking-widest uppercase font-light drop-shadow-md ${highContrast ? 'text-white' : 'text-white/90'}`} style={{ letterSpacing: '0.1em' }}>
               Raionul Rîșcani • Nordul Moldovei
@@ -161,7 +161,7 @@ export const Home: React.FC<HomeProps> = ({ setView, highContrast }) => {
                  <div className="flex-1 text-center md:text-left">
                     <span className="absolute top-6 left-8 text-6xl opacity-10 font-serif text-moldova-blue">"</span>
                     <h2 className={`text-2xl font-bold mb-1 ${highContrast ? 'text-yellow-400' : 'text-moldova-charcoal'}`}>Lorentii Lisevici</h2>
-                    <p className={`text-sm font-medium mb-6 ${highContrast ? 'text-gray-400' : 'text-moldova-steel'}`}>Primarul comunei Pociumbăuți</p>
+                    <p className={`text-sm font-medium mb-6 ${highContrast ? 'text-gray-400' : 'text-moldova-steel'}`}>Primarul satul Pociumbăuți</p>
                     
                     <p className={`text-lg italic font-serif leading-relaxed mb-6 ${highContrast ? 'text-gray-200' : 'text-moldova-charcoal'}`}>
                       Bine ați venit pe pagina oficială a Primăriei Pociumbăuți. 

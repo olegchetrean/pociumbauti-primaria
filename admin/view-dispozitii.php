@@ -63,7 +63,7 @@ include 'includes/header.php';
 <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
     <div>
         <h2>Lista Dispoziții Primar</h2>
-        <p>Dispoziții emise de Primarul comunei</p>
+        <p>Dispoziții emise de Primarul satul</p>
     </div>
     <a href="publish-dispozitie.php" class="btn btn-primary">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

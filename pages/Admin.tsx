@@ -226,7 +226,7 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 to-purple-900/80 flex flex-col justify-center px-16 text-white">
               <h2 className="text-5xl font-bold mb-6">Bine ați revenit!</h2>
               <p className="text-xl max-w-lg leading-relaxed text-blue-100">
-                Gestionați cu încredere și siguranță informațiile pentru cei 593 de locuitori ai comunei Pociumbăuți.
+                Gestionați cu încredere și siguranță informațiile pentru cei 593 de locuitori ai satul Pociumbăuți.
               </p>
               <div className="mt-12 flex items-center gap-4 text-sm font-mono opacity-60">
                 <Shield size={16} /> CONEXIUNE SECURIZATĂ TLS 1.3

@@ -20,7 +20,7 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 flex items-center justify-center">
           <div className="text-center text-white">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Administrația Comunei</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Administrația Satul</h1>
             <p className="text-xl opacity-90">Conducerea aleasă democratic, în slujba comunității</p>
           </div>
         </div>
@@ -197,7 +197,7 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
               <div className="flex items-center gap-3 mb-4">
                 <Award className="text-amber-500" size={32} />
                 <h3 className={`text-xl font-bold ${highContrast ? 'text-white' : 'text-moldova-charcoal'}`}>
-                  Stema Comunei
+                  Stema Satul
                 </h3>
               </div>
               <p className={`mb-4 ${textClass}`}>{OFFICIAL_SYMBOLS.stema.descriere}</p>
@@ -225,7 +225,7 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
               <div className="flex items-center gap-3 mb-4">
                 <Flag className="text-moldova-blue" size={32} />
                 <h3 className={`text-xl font-bold ${highContrast ? 'text-white' : 'text-moldova-charcoal'}`}>
-                  Drapelul Comunei
+                  Drapelul Satul
                 </h3>
               </div>
               <p className={`mb-4 ${textClass}`}>{OFFICIAL_SYMBOLS.drapel.descriere}</p>

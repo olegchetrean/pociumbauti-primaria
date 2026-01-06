@@ -64,7 +64,7 @@ const Footer = ({ highContrast, setView }: { highContrast: boolean, setView: (v:
                 P
               </div>
               <div>
-                <h3 className="font-bold text-lg leading-tight">Primăria Comunei Pociumbăuți</h3>
+                <h3 className="font-bold text-lg leading-tight">Primăria Satul Pociumbăuți</h3>
                 <p className="text-xs opacity-70">Raionul Rîșcani, Republica Moldova</p>
               </div>
             </div>

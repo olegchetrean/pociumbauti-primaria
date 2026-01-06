@@ -56,7 +56,7 @@ export const Contact: React.FC<Props> = ({ highContrast }) => {
 
           window.L.marker([CONTACT_INFO.coordinates!.lat, CONTACT_INFO.coordinates!.lng])
             .addTo(map)
-            .bindPopup(`<strong>Primăria Comunei Pociumbăuți</strong><br>${CONTACT_INFO.address}`)
+            .bindPopup(`<strong>Primăria Satul Pociumbăuți</strong><br>${CONTACT_INFO.address}`)
             .openPopup();
 
           mapInstanceRef.current = map;

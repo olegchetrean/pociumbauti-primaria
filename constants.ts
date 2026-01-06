@@ -32,7 +32,7 @@ export const CONTACT_INFO: ContactInfo = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const GEOGRAPHY_DATA: GeographyData = {
-  numeOficial: "Comuna Pociumbăuți",
+  numeOficial: "Satul Pociumbăuți",
   numeCyrillic: "Почумбэуць",
   alias: "Pocembeuți",
   raion: "Rîșcani",
@@ -326,7 +326,7 @@ export const HISTORY_EVENTS: HistoryEvent[] = [
   {
     year: "2023",
     title: "Simboluri Oficiale",
-    description: "La 14 decembrie, Consiliul Local aprobă oficial Stema și Drapelul comunei, incluzând trandafirii familiei Rosetti și potcoava familiei Stroescu.",
+    description: "La 14 decembrie, Consiliul Local aprobă oficial Stema și Drapelul satul, incluzând trandafirii familiei Rosetti și potcoava familiei Stroescu.",
     period: "Epoca Modernă",
     important: true
   },
@@ -450,13 +450,13 @@ export const ECONOMY_DATA: EconomyData = {
 export const INSTITUTIONS: Institution[] = [
   {
     id: "primaria",
-    nume: "Primăria Comunei Pociumbăuți",
+    nume: "Primăria Satul Pociumbăuți",
     tip: "Administrație publică locală",
     adresa: "Str. Pociumbautenilor 18",
     telefon: "+373 256 73421",
     email: "primaria.pociumbauti@gov.md",
     program: "Luni-Vineri: 08:00-17:00 (Pauză 12:00-13:00)",
-    descriere: "Autoritatea administrației publice locale care gestionează treburile publice ale comunei.",
+    descriere: "Autoritatea administrației publice locale care gestionează treburile publice ale satul.",
     personal: 5
   },
   {
@@ -819,8 +819,8 @@ export const ANNOUNCEMENTS: Announcement[] = [
     titlu: "Ședința Consiliului Local - 15 decembrie 2024",
     categorie: "sedinta",
     data_publicare: "2024-12-11",
-    continut: "Consiliul Local al comunei Pociumbăuți vă invită la ședința ordinară care va avea loc pe data de 15 decembrie 2024, ora 15:00, în sala de ședințe a Primăriei. Pe ordinea de zi: raport de activitate, proiecte pentru 2025, diverse.",
-    continut_scurt: "Consiliul Local al comunei Pociumbăuți vă invită la ședința ordinară care va avea loc pe data de 15 decembrie 2024...",
+    continut: "Consiliul Local al satul Pociumbăuți vă invită la ședința ordinară care va avea loc pe data de 15 decembrie 2024, ora 15:00, în sala de ședințe a Primăriei. Pe ordinea de zi: raport de activitate, proiecte pentru 2025, diverse.",
+    continut_scurt: "Consiliul Local al satul Pociumbăuți vă invită la ședința ordinară care va avea loc pe data de 15 decembrie 2024...",
     prioritate: true,
     views: 45
   },
@@ -915,13 +915,13 @@ export const MOCK_LOGS: AdminLog[] = [
 export const OFFICIAL_SYMBOLS = {
   stema: {
     aprobare: "14 decembrie 2023",
-    descriere: "Stema comunei include simboluri agricole (spice de grâu, soare) și elemente istorice (trandafirii familiei Rosetti, potcoava familiei Stroescu).",
+      descriere: "Stema satul include simboluri agricole (spice de grâu, soare) și elemente istorice (trandafirii familiei Rosetti, potcoava familiei Stroescu).",
     culori: ["Albastru", "Aur", "Verde"],
     semnificatie: "Moldova, prosperitate, natură"
   },
   drapel: {
     aprobare: "14 decembrie 2023",
-    descriere: "Drapelul comunei reflectă culorile și simbolurile stemei.",
+      descriere: "Drapelul satul reflectă culorile și simbolurile stemei.",
     culori: ["Albastru", "Aur", "Verde"]
   },
   motto: "Pociumbăuți - 313 ani istorie, o comunitate mândră care merge înainte"

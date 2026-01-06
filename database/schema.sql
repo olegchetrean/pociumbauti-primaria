@@ -269,7 +269,7 @@ INSERT INTO `users` (`username`, `password_hash`, `full_name`, `role`, `email`) 
 
 -- Setări implicite
 INSERT INTO `setari` (`cheie`, `valoare`, `descriere`, `grup`, `tip`) VALUES
-('site_name', 'Primăria Comunei Pociumbăuți', 'Numele site-ului', 'general', 'text'),
+('site_name', 'Primăria Satul Pociumbăuți', 'Numele site-ului', 'general', 'text'),
 ('site_email', 'primaria.pociumbauti@gov.md', 'Email principal contact', 'contact', 'email'),
 ('site_phone_mayor', '+373 256 73421', 'Telefon primar', 'contact', 'text'),
 ('site_phone_secretary', '+373 671 06938', 'Telefon secretar', 'contact', 'text'),
@@ -285,7 +285,7 @@ INSERT INTO `setari` (`cheie`, `valoare`, `descriere`, `grup`, `tip`) VALUES
 -- Anunț de test
 INSERT INTO `anunturi` (`titlu`, `categorie`, `data_publicare`, `continut`, `continut_scurt`, `prioritate`, `vizibil`, `created_by`) VALUES
 ('Bine ați venit pe noul site!', 'general', CURDATE(),
-'<p>Primăria comunei Pociumbăuți vă urează bun venit pe noul site oficial, dezvoltat conform cerințelor <strong>HG 728/2023</strong>.</p><p>Aici veți găsi toate informațiile despre activitatea administrației locale, deciziile consiliului, dispozițiile primarului și anunțurile importante.</p>',
+'<p>Primăria satul Pociumbăuți vă urează bun venit pe noul site oficial, dezvoltat conform cerințelor <strong>HG 728/2023</strong>.</p><p>Aici veți găsi toate informațiile despre activitatea administrației locale, deciziile consiliului, dispozițiile primarului și anunțurile importante.</p>',
 'Bine ați venit pe noul site oficial al Primăriei Pociumbăuți, dezvoltat conform HG 728/2023.',
 1, 1, 1);
 
