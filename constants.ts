@@ -924,5 +924,5 @@ export const OFFICIAL_SYMBOLS = {
       descriere: "Drapelul satul reflectă culorile și simbolurile stemei.",
     culori: ["Albastru", "Aur", "Verde"]
   },
-  motto: "Pociumbăuți - 313 ani istorie, o comunitate mândră care merge înainte"
+  motto: "Pociumbăuți - 255 ani istorie, o comunitate mândră care merge înainte"
 };

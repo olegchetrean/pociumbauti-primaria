@@ -1,76 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { CONTACT_INFO } from '../constants';
 import { MapPin, Phone, Mail, Clock, UserCheck } from 'lucide-react';
-
-// Leaflet types
-declare global {
-  interface Window {
-    L: any;
-  }
-}
 
 interface Props { highContrast: boolean; }
 
 export const Contact: React.FC<Props> = ({ highContrast }) => {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
-
-  useEffect(() => {
-    // Load Leaflet CSS and JS dynamically
-    const loadLeaflet = () => {
-      if (window.L) {
-        return Promise.resolve();
-      }
-
-      return new Promise<void>((resolve) => {
-        // Load CSS
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-        link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
-        link.crossOrigin = '';
-        document.head.appendChild(link);
-
-        // Load JS
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-        script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
-        script.crossOrigin = '';
-        script.onload = () => resolve();
-        document.body.appendChild(script);
-      });
-    };
-
-    if (mapRef.current && !mapInstanceRef.current) {
-      loadLeaflet().then(() => {
-        if (window.L && mapRef.current) {
-          const map = window.L.map(mapRef.current).setView(
-            [CONTACT_INFO.coordinates!.lat, CONTACT_INFO.coordinates!.lng],
-            15
-          );
-
-          window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
-            maxZoom: 19,
-          }).addTo(map);
-
-          window.L.marker([CONTACT_INFO.coordinates!.lat, CONTACT_INFO.coordinates!.lng])
-            .addTo(map)
-            .bindPopup(`<strong>Primăria Satul Pociumbăuți</strong><br>${CONTACT_INFO.address}`)
-            .openPopup();
-
-          mapInstanceRef.current = map;
-        }
-      });
-    }
-
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-    };
-  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -95,7 +29,7 @@ export const Contact: React.FC<Props> = ({ highContrast }) => {
                 <Phone className="text-moldova-blue mt-1" />
                 <div>
                   <span className="font-bold block text-sm opacity-70">Telefoane</span>
-                  <p>Primar: <a href={`tel:${CONTACT_INFO.phoneMayor}`} className="hover:underline">{CONTACT_INFO.phoneMayor}</a></p>
+                  <p>Primar: <a href={`tel:${CONTACT_INFO.phoneMayor}`} className="hover:underline">{CONTACT_INFO.phoneMayor}</a>, <a href="tel:+37367611811" className="hover:underline">+373 676 11811</a></p>
                   <p>Secretar/Contabilitate: <a href={`tel:${CONTACT_INFO.phoneSecretary}`} className="hover:underline">{CONTACT_INFO.phoneSecretary}</a></p>
                 </div>
               </li>
@@ -134,21 +68,17 @@ export const Contact: React.FC<Props> = ({ highContrast }) => {
         {/* Map & Form */}
         <div className="space-y-8">
             <div className={`rounded-xl overflow-hidden border-2 ${highContrast ? 'border-yellow-400' : 'border-gray-200'}`}>
-                <div 
-                    ref={mapRef} 
-                    style={{ height: '400px', width: '100%' }}
-                    className="z-0"
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d562.9345978042137!2d27.32241973413662!3d47.99588339545808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4734a9000bc85f2f%3A0x386458d7f0c65ea7!2zUHJpbcSDcmlhIFBvY2l1bWLEg3XFo2k!5e1!3m2!1sru!2s!4v1767943298942!5m2!1sru!2s" 
+                    width="100%" 
+                    height="450" 
+                    style={{ border: 0 }} 
+                    allowFullScreen 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Harta Primăriei Satul Pociumbăuți"
+                    className="w-full"
                 />
-            </div>
-            <div className="text-center">
-                <a
-                    href={`https://www.openstreetmap.org/?mlat=${CONTACT_INFO.coordinates!.lat}&mlon=${CONTACT_INFO.coordinates!.lng}&zoom=15`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-sm hover:underline ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}
-                >
-                    Vezi hartă mai mare →
-                </a>
             </div>
 
             <div className={`p-6 rounded-xl border ${highContrast ? 'bg-gray-900 border-yellow-400 text-white' : 'bg-white border-gray-200 shadow-sm'}`}>

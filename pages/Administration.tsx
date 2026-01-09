@@ -70,7 +70,15 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-center sm:justify-start gap-2">
                         <Phone size={16} className="opacity-70" />
-                        <a href={`tel:${person.phone}`} className="hover:underline">{person.phone}</a>
+                        <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                          <a href={`tel:${person.phone}`} className="hover:underline">{person.phone}</a>
+                          {person.id === "mayor" && (
+                            <>
+                              <span>,</span>
+                              <a href="tel:+37367611811" className="hover:underline">+373 676 11811</a>
+                            </>
+                          )}
+                        </div>
                       </div>
                       <div className="flex items-center justify-center sm:justify-start gap-2">
                         <Mail size={16} className="opacity-70" />

@@ -73,7 +73,7 @@ const Footer = ({ highContrast, setView }: { highContrast: boolean, setView: (v:
               Transparență totală în administrația publică locală.
             </p>
             <p className="text-sm italic opacity-70">
-              "313 ani de istorie, o comunitate mândră care merge înainte"
+              "255 ani de istorie, o comunitate mândră care merge înainte"
             </p>
           </div>
 
@@ -90,7 +90,7 @@ const Footer = ({ highContrast, setView }: { highContrast: boolean, setView: (v:
               <li className="flex gap-2">
                 <Phone size={16} className="mt-0.5 shrink-0" />
                 <div>
-                  <p>Primar: <a href={`tel:${CONTACT_INFO.phoneMayor}`} className="hover:underline">{CONTACT_INFO.phoneMayor}</a></p>
+                  <p>Primar: <a href={`tel:${CONTACT_INFO.phoneMayor}`} className="hover:underline">{CONTACT_INFO.phoneMayor}</a>, <a href="tel:+37367611811" className="hover:underline">+373 676 11811</a></p>
                   <p>Secretar: <a href={`tel:${CONTACT_INFO.phoneSecretary}`} className="hover:underline">{CONTACT_INFO.phoneSecretary}</a></p>
                 </div>
               </li>

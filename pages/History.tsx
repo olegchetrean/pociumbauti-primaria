@@ -45,7 +45,7 @@ export const History: React.FC<Props> = ({ highContrast }) => {
           <div className="text-center text-white max-w-4xl mx-auto px-4">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">Istoric și Identitate</h1>
             <p className="text-2xl opacity-90 mb-4">
-              Pociumbăuți: <span className="text-yellow-400 font-bold">313 ani</span> de istorie, tradiție și reziliență
+              Pociumbăuți: <span className="text-yellow-400 font-bold">255 ani</span> de istorie, tradiție și reziliență
             </p>
             <p className="text-lg opacity-80">
               De la prima atestare documentară în 1711 până în prezent - o comunitate mândră de rădăcinile sale.
@@ -263,7 +263,7 @@ export const History: React.FC<Props> = ({ highContrast }) => {
         {/* Statistics */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className={`${cardClass} text-center`}>
-            <p className={`text-4xl font-bold ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}>313</p>
+            <p className={`text-4xl font-bold ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}>255</p>
             <p className={textClass}>Ani de istorie</p>
           </div>
           <div className={`${cardClass} text-center`}>

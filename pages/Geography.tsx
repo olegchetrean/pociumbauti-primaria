@@ -24,7 +24,7 @@ export const Geography: React.FC<Props> = ({ highContrast }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 flex items-center justify-center">
           <div className="text-center text-white">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Geografie și Demografie</h1>
-            <p className="text-xl opacity-90">Descoperă satul Pociumbăuți - 313 ani de istorie în nordul Moldovei</p>
+            <p className="text-xl opacity-90">Descoperă satul Pociumbăuți - 255 ani de istorie în nordul Moldovei</p>
           </div>
         </div>
       </section>
