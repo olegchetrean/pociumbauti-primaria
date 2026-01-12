@@ -9,9 +9,9 @@ export const CONTACT_INFO: ContactInfo = {
   postalCode: "MD-5632",
   phoneMayor: "+373 256 73421",
   phoneSecretary: "+373 671 06938",
-  email: "primaria.pociumbauti@gov.md",
-  emailMayor: "primar.pociumbauti@gov.md",
-  emailSecretary: "secretar.pociumbauti@gov.md",
+  email: "primaria.pociumbauti@apl.gov.md",
+  emailMayor: "primaria.pociumbauti@gmail.com",
+  emailSecretary: "primaria.pociumbauti@gmail.com",
   schedule: "Luni - Vineri: 08:00 - 17:00 (Pauză 12:00-13:00)",
   audiences: "Marți și Joi: 14:00 - 16:00",
   coordinates: {
@@ -454,7 +454,7 @@ export const INSTITUTIONS: Institution[] = [
     tip: "Administrație publică locală",
     adresa: "Str. Pociumbautenilor 18",
     telefon: "+373 256 73421",
-    email: "primaria.pociumbauti@gov.md",
+    email: "primaria.pociumbauti@apl.gov.md",
     program: "Luni-Vineri: 08:00-17:00 (Pauză 12:00-13:00)",
     descriere: "Autoritatea administrației publice locale care gestionează treburile publice ale satul.",
     personal: 5
@@ -464,20 +464,32 @@ export const INSTITUTIONS: Institution[] = [
     nume: "Școala Generală Pociumbăuți",
     tip: "Instituție de învățământ",
     adresa: "Pociumbăuți, Raionul Rîșcani",
-    descriere: "Școală primară + gimnazială (clase I-IX). Clădire renovată 2010, echipament basic IT.",
-    personal: 14,
+    descriere: "Școala este închisă, copii se deplasează la Pociumbeni.",
+    status: "închis",
     detalii: {
-      elevi: "60-80 (în scădere)",
-      limbiPredare: "Română (principal), Rusă (opțional)",
-      probleme: "Număr elevi scade, risc închidere clase"
+      elevi: "Școala este închisă",
+      limbiPredare: "Copii se deplasează la Școala din Pociumbeni",
+      probleme: "Școala este închisă, copii se deplasează la Pociumbeni"
     }
   },
   {
     id: "gradinita",
-    nume: "Grădinița (ÎNCHISĂ)",
+    nume: "Grădinița",
     tip: "Instituție de învățământ",
-    descriere: "Închisă din 2015 din cauza lipsei copiilor. Clădirea este folosită ca depozit sau sală evenimente.",
-    status: "închis"
+    adresa: "Pociumbăuți, Raionul Rîșcani",
+    descriere: "Grădinița funcționează și oferă servicii de educație preșcolară pentru copiii din sat.",
+    status: "activ",
+    detalii: {
+      grupe: "2-3 grupe de vârstă",
+      copii: "20-30 copii",
+      activitati: [
+        "Activități educaționale și de dezvoltare",
+        "Masă și odihnă",
+        "Jocuri și activități recreative",
+        "Pregătire pentru școală"
+      ],
+      stare: "Funcționează normal, clădirea este întreținută"
+    }
   },
   {
     id: "dispensar",
@@ -503,7 +515,7 @@ export const INSTITUTIONS: Institution[] = [
     detalii: {
       activitati: [
         "Festival 'Nunta Moldovenească' (august)",
-        "Hramul satului (noiembrie)",
+        "Hramul satului (21 noiembrie)",
         "Spectacole copii (Crăciun, Paște)",
         "Ședințe consiliu local",
         "Cinematograf ocazional"
@@ -516,11 +528,12 @@ export const INSTITUTIONS: Institution[] = [
     tip: "Instituție culturală",
     adresa: "Pociumbăuți",
     program: "Luni-Vineri 09:00-17:00",
-    descriere: "~3,000 cărți, majoritar sovietice. Cititori activi: 30-40 persoane.",
+    descriere: "~3,000 cărți, majoritar sovietice. Cititori activi: 30-40 persoane. Fondul de cărți se reînnoiește anual, anul acesta a fost făcută reparația.",
     personal: 1,
     detalii: {
       volum: "~3,000 cărți",
-      probleme: "Cărți vechi, lipsa achiziții noi, umiditate"
+      reînnoire: "Fondul de cărți se reînnoiește anual",
+      reparație: "Anul acesta a fost făcută reparația"
     }
   },
   {
@@ -550,9 +563,10 @@ export const STAFF: StaffMember[] = [
     name: "Lorentii Lisevici",
     role: "Primar",
     phone: "+373 256 73421",
-    email: "primar.pociumbauti@gov.md",
+    email: "primaria.pociumbauti@gmail.com",
     image: "https://picsum.photos/200/200?random=1",
     bio: "Fermier din generație și lider ales al comunității, Lorentii Lisevici conduce Pociumbăuți cu dedicare și viziune pentru viitor. Ales în noiembrie 2023 pe listele PSRM.",
+    previousActivity: "agent economic în domeniul comerțului",
     partid: "PSRM",
     mandatStart: "2023",
     mandatEnd: "2027"
@@ -562,7 +576,7 @@ export const STAFF: StaffMember[] = [
     name: "Irina",
     role: "Secretarul Consiliului Local",
     phone: "+373 671 06938",
-    email: "secretar.pociumbauti@gov.md",
+    email: "primaria.pociumbauti@gmail.com",
     image: "https://picsum.photos/200/200?random=2",
     bio: "Cu peste 20 de ani experiență în administrația publică locală, Irina asigură funcționarea zilnică a primăriei și legătura cu cetățenii."
   }
@@ -656,7 +670,7 @@ export const CULTURAL_EVENTS = [
   {
     id: "hram",
     nume: "Hramul Satului",
-    data: "8 noiembrie",
+    data: "21 noiembrie",
     descriere: "Ziua Sfântului Arhanghel Mihail - patronul bisericii. Liturghie specială, procesiune religioasă, masă comună în curtea bisericii, muzică populară și dansuri tradiționale.",
     traditie: true
   },

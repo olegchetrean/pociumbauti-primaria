@@ -76,6 +76,7 @@ export interface StaffMember {
   email: string;
   image?: string;
   bio?: string;
+  previousActivity?: string;
   partid?: string;
   mandatStart?: string;
   mandatEnd?: string;

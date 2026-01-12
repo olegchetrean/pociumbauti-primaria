@@ -204,7 +204,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
               </p>
               <div className={`p-4 rounded-lg ${highContrast ? 'bg-gray-800' : 'bg-purple-50'}`}>
                 <p className="font-semibold">Hramul Bisericii</p>
-                <p className={textClass}>8 Noiembrie - Ziua Sfântului Arhanghel Mihail</p>
+                <p className={textClass}>21 Noiembrie - Ziua Sfântului Arhanghel Mihail</p>
               </div>
             </div>
           </div>
@@ -255,7 +255,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
                 EVENIMENT PRINCIPAL
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Hramul Satului - 8 Noiembrie
+                Hramul Satului - 21 Noiembrie
               </h2>
               <p className="text-white/90 mb-6 leading-relaxed">
                 Cea mai importantă sărbătoare a comunității Pociumbăuți coincide cu Ziua Sfântului

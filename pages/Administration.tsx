@@ -92,6 +92,12 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
                     {person.bio}
                   </p>
                 )}
+                {person.previousActivity && (
+                  <p className={`mt-3 text-sm leading-relaxed ${textClass}`}>
+                    <span className="font-semibold">Activitatea până la mandat de primar: </span>
+                    {person.previousActivity}
+                  </p>
+                )}
               </div>
             ))}
           </div>

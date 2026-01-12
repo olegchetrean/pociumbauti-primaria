@@ -270,7 +270,7 @@ INSERT INTO `users` (`username`, `password_hash`, `full_name`, `role`, `email`) 
 -- Setări implicite
 INSERT INTO `setari` (`cheie`, `valoare`, `descriere`, `grup`, `tip`) VALUES
 ('site_name', 'Primăria Satul Pociumbăuți', 'Numele site-ului', 'general', 'text'),
-('site_email', 'primaria.pociumbauti@gov.md', 'Email principal contact', 'contact', 'email'),
+('site_email', 'primaria.pociumbauti@apl.gov.md', 'Email principal contact', 'contact', 'email'),
 ('site_phone_mayor', '+373 256 73421', 'Telefon primar', 'contact', 'text'),
 ('site_phone_secretary', '+373 671 06938', 'Telefon secretar', 'contact', 'text'),
 ('site_address', 'Str. Pociumbăuțenilor 18', 'Adresa poștală', 'contact', 'textarea'),

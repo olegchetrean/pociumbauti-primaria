@@ -60,7 +60,7 @@ try {
 
 // Constante aplicație
 define('SITE_NAME', 'Primăria Pociumbăuți');
-define('SITE_EMAIL', 'primaria.pociumbauti@gov.md');
+define('SITE_EMAIL', 'primaria.pociumbauti@apl.gov.md');
 define('SITE_URL', 'https://pociumbauti.md');
 define('ADMIN_URL', SITE_URL . '/admin');
 
