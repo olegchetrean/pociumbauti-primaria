@@ -30,7 +30,8 @@ export const Contact: React.FC<Props> = ({ highContrast }) => {
                 <div>
                   <span className="font-bold block text-sm opacity-70">Telefoane</span>
                   <p>Primar: <a href={`tel:${CONTACT_INFO.phoneMayor}`} className="hover:underline">{CONTACT_INFO.phoneMayor}</a>, <a href="tel:+37367611811" className="hover:underline">+373 676 11811</a></p>
-                  <p>Secretar/Contabilitate: <a href={`tel:${CONTACT_INFO.phoneSecretary}`} className="hover:underline">{CONTACT_INFO.phoneSecretary}</a></p>
+                  <p>Secretar: <a href={`tel:${CONTACT_INFO.phoneSecretary}`} className="hover:underline">{CONTACT_INFO.phoneSecretary}</a></p>
+                  <p>Contabilitate: <a href={`tel:${CONTACT_INFO.phoneContabilitate}`} className="hover:underline">{CONTACT_INFO.phoneContabilitate}</a></p>
                 </div>
               </li>
               <li className="flex items-start gap-3">

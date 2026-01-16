@@ -92,6 +92,7 @@ const Footer = ({ highContrast, setView }: { highContrast: boolean, setView: (v:
                 <div>
                   <p>Primar: <a href={`tel:${CONTACT_INFO.phoneMayor}`} className="hover:underline">{CONTACT_INFO.phoneMayor}</a>, <a href="tel:+37367611811" className="hover:underline">+373 676 11811</a></p>
                   <p>Secretar: <a href={`tel:${CONTACT_INFO.phoneSecretary}`} className="hover:underline">{CONTACT_INFO.phoneSecretary}</a></p>
+                  <p>Contabilitate: <a href={`tel:${CONTACT_INFO.phoneContabilitate}`} className="hover:underline">{CONTACT_INFO.phoneContabilitate}</a></p>
                 </div>
               </li>
               <li className="flex gap-2">

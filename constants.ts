@@ -9,6 +9,7 @@ export const CONTACT_INFO: ContactInfo = {
   postalCode: "MD-5632",
   phoneMayor: "+373 256 73421",
   phoneSecretary: "+373 671 06938",
+  phoneContabilitate: "+373 671 07053",
   email: "primaria.pociumbauti@apl.gov.md",
   emailMayor: "primaria.pociumbauti@gmail.com",
   emailSecretary: "primaria.pociumbauti@gmail.com",

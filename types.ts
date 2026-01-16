@@ -97,6 +97,7 @@ export interface ContactInfo {
   postalCode?: string;
   phoneMayor: string;
   phoneSecretary: string;
+  phoneContabilitate?: string;
   email: string;
   emailMayor?: string;
   emailSecretary?: string;
