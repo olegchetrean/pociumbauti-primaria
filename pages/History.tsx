@@ -37,7 +37,7 @@ export const History: React.FC<Props> = ({ highContrast }) => {
       {/* Hero Section */}
       <section className="relative h-[500px] overflow-hidden">
         <img
-          src="https://picsum.photos/1920/800?random=historic"
+          src="/uploads/photos/thumbs/istorie.jpg"
           alt="Istorie Pociumbăuți"
           className="w-full h-full object-cover"
         />
@@ -60,9 +60,9 @@ export const History: React.FC<Props> = ({ highContrast }) => {
         <section className={`rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row ${highContrast ? 'bg-gray-900 border-2 border-yellow-400' : 'bg-white'}`}>
           <div className="md:w-1/2 relative min-h-[400px]">
             <img
-              src="https://picsum.photos/800/800?random=monument"
+              src="/uploads/photos/thumbs/monument.jpg"
               alt="Monumentul Eroilor"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
               <div className="text-white">

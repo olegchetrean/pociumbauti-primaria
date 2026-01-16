@@ -14,7 +14,7 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
       {/* Hero Section */}
       <section className="relative h-[400px] overflow-hidden">
         <img
-          src="https://picsum.photos/1920/600?random=admin"
+          src="/uploads/photos/thumbs/gerb.jpg"
           alt="Administrația Pociumbăuți"
           className="w-full h-full object-cover"
         />
@@ -46,7 +46,7 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
                   <img
                     src={person.image}
                     alt={person.name}
-                    className={`w-32 h-32 rounded-full object-cover mx-auto sm:mx-0 border-4 ${highContrast ? 'border-yellow-400' : 'border-moldova-blue'}`}
+                    className={`w-32 h-32 rounded-full object-cover ${person.id === "mayor" ? "object-[50%_25%]" : person.id === "secretary" ? "object-[50%_25%]" : ""} mx-auto sm:mx-0 border-4 ${highContrast ? 'border-yellow-400' : 'border-moldova-blue'}`}
                   />
                   <div className="text-center sm:text-left flex-1">
                     <h3 className={`text-xl font-bold mb-1 ${highContrast ? 'text-white' : 'text-moldova-charcoal'}`}>

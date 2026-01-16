@@ -17,7 +17,7 @@ export const Geography: React.FC<Props> = ({ highContrast }) => {
       {/* Hero Section */}
       <section className="relative h-[400px] overflow-hidden">
         <img
-          src="https://picsum.photos/1920/600?random=geography"
+          src="/uploads/photos/thumbs/demografia.jpg"
           alt="Peisaj Pociumbăuți"
           className="w-full h-full object-cover"
         />

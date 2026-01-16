@@ -19,7 +19,7 @@ export const Economy: React.FC<Props> = ({ highContrast }) => {
       {/* Hero Section */}
       <section className="relative h-[400px] overflow-hidden">
         <img
-          src="https://picsum.photos/1920/600?random=wheat"
+          src="/uploads/photos/thumbs/economie.jpg"
           alt="Câmpuri agricole Pociumbăuți"
           className="w-full h-full object-cover"
         />

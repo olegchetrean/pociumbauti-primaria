@@ -564,7 +564,7 @@ export const STAFF: StaffMember[] = [
     role: "Primar",
     phone: "+373 256 73421",
     email: "primaria.pociumbauti@gmail.com",
-    image: "https://picsum.photos/200/200?random=1",
+    image: "/uploads/faces/primar.jpg",
     bio: "Fermier din generație și lider ales al comunității, Lorentii Lisevici conduce Pociumbăuți cu dedicare și viziune pentru viitor. Ales în noiembrie 2023 pe listele PSRM.",
     previousActivity: "agent economic în domeniul comerțului",
     partid: "PSRM",
@@ -577,7 +577,7 @@ export const STAFF: StaffMember[] = [
     role: "Secretarul Consiliului Local",
     phone: "+373 671 06938",
     email: "primaria.pociumbauti@gmail.com",
-    image: "https://picsum.photos/200/200?random=2",
+    image: "/uploads/faces/secretar.jpg",
     bio: "Cu peste 20 de ani experiență în administrația publică locală, Irina asigură funcționarea zilnică a primăriei și legătura cu cetățenii."
   }
 ];
@@ -866,7 +866,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
     data_publicare: "2024-12-01",
     continut: "Lucrările de reconstrucție a Monumentului Eroilor din Primul Război Mondial avansează conform planului. Inaugurarea este programată pentru 18 iulie 2025. Mulțumim tuturor donatorilor și voluntarilor!",
     continut_scurt: "Lucrările de reconstrucție a Monumentului Eroilor avansează conform planului...",
-    imagine_url: "https://picsum.photos/800/400?random=monument",
+    imagine_url: "/uploads/photos/thumbs/monument.jpg",
     prioritate: false,
     views: 250
   }

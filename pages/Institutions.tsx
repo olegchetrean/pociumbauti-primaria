@@ -39,7 +39,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
       {/* Hero Section */}
       <section className="relative h-[400px] overflow-hidden">
         <img
-          src="https://picsum.photos/1920/600?random=church"
+          src="/uploads/photos/thumbs/cultura.jpg"
           alt="Instituții Pociumbăuți"
           className="w-full h-full object-cover"
         />
@@ -187,7 +187,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <img
-                src="https://picsum.photos/600/400?random=church2"
+                src="/uploads/photos/thumbs/biserica1.jpg"
                 alt="Biserica Sfântul Arhanghel Mihail"
                 className="w-full h-64 object-cover rounded-lg"
               />
@@ -245,7 +245,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
         {/* Hramul Satului - Featured */}
         <section className={`relative rounded-2xl overflow-hidden`}>
           <img
-            src="https://picsum.photos/1920/500?random=festival"
+            src="/uploads/photos/thumbs/biserica2.jpg"
             alt="Hramul Satului"
             className="w-full h-[400px] object-cover"
           />
@@ -308,7 +308,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
             </div>
             <div>
               <img
-                src="https://picsum.photos/600/400?random=wedding"
+                src="/uploads/photos/thumbs/nunta.jpg"
                 alt="Festival Nunta Moldovenească"
                 className="w-full h-64 object-cover rounded-lg"
               />

@@ -9,9 +9,9 @@ interface HomeProps {
 }
 
 const HERO_IMAGES = [
-  "https://picsum.photos/1920/1080?random=1", // Wheat fields representation
-  "https://picsum.photos/1920/1080?random=2", // Monument representation
-  "https://picsum.photos/1920/1080?random=3"  // Village center representation
+  "/uploads/photos/thumbs/first.jpg", // Wheat fields representation
+  "/uploads/photos/thumbs/second.jpg", // Monument representation
+  "/uploads/photos/thumbs/third.jpg"  // Village center representation
 ];
 
 export const Home: React.FC<HomeProps> = ({ setView, highContrast }) => {
@@ -153,9 +153,9 @@ export const Home: React.FC<HomeProps> = ({ setView, highContrast }) => {
                  <div className="flex-shrink-0 relative group">
                     <div className={`absolute inset-0 rounded-full blur opacity-40 group-hover:opacity-70 transition-opacity duration-500 ${highContrast ? 'bg-yellow-400' : 'bg-moldova-blue'}`}></div>
                     <img 
-                      src="https://picsum.photos/400/400?random=mayor" 
+                      src="/uploads/faces/primar.jpg" 
                       alt="Primar Lorentii Lisevici" 
-                      className={`relative w-32 h-32 rounded-full object-cover border-4 shadow-lg ${highContrast ? 'border-yellow-400' : 'border-moldova-blue'}`}
+                      className={`relative w-32 h-32 rounded-full object-cover object-[50%_25%] border-4 shadow-lg ${highContrast ? 'border-yellow-400' : 'border-moldova-blue'}`}
                     />
                  </div>
                  <div className="flex-1 text-center md:text-left">
