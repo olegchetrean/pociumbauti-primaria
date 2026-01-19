@@ -13,6 +13,8 @@ import { Transparency } from './pages/Transparency';
 import { Geography } from './pages/Geography';
 import { Economy } from './pages/Economy';
 import { Institutions } from './pages/Institutions';
+import { Announcements } from './pages/Announcements';
+import { AnnouncementDetail } from './pages/AnnouncementDetail';
 import { Shield, MapPin, Phone, Mail, Clock, ExternalLink, Heart } from 'lucide-react';
 import { CONTACT_INFO, USEFUL_LINKS } from './constants';
 
@@ -158,15 +160,6 @@ const Footer = ({ highContrast, setView }: { highContrast: boolean, setView: (v:
               </li>
             </ul>
 
-            <div className="pt-4">
-              <button
-                onClick={() => setView('admin')}
-                className={`text-xs px-3 py-1.5 rounded border opacity-50 hover:opacity-100 transition-opacity flex items-center gap-1 ${highContrast ? 'border-yellow-400 text-yellow-400' : 'border-gray-500 text-gray-400'}`}
-              >
-                <Shield size={12} />
-                Acces Funcționari
-              </button>
-            </div>
           </div>
 
         </div>
@@ -192,9 +185,175 @@ const Footer = ({ highContrast, setView }: { highContrast: boolean, setView: (v:
 }
 
 function App() {
-  const [view, setView] = useState<ViewState>('home');
+  // Initialize view from URL immediately to prevent redirects
+  const getInitialView = (): ViewState => {
+    if (typeof window === 'undefined') return 'home';
+    const path = window.location.pathname;
+    if (path.startsWith('/admin')) return 'admin';
+    const routeMap: Record<string, ViewState> = {
+      '/': 'home',
+      '/home': 'home',
+      '/administration': 'administration',
+      '/documents': 'documents',
+      '/transparency': 'transparency',
+      '/contact': 'contact',
+      '/history': 'history',
+      '/services': 'services',
+      '/geography': 'geography',
+      '/economy': 'economy',
+      '/institutions': 'institutions',
+    };
+    return routeMap[path] || 'home';
+  };
+
+  const [view, setView] = useState<ViewState>(getInitialView());
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xl'>('normal');
   const [highContrast, setHighContrast] = useState(false);
+  const [routingInitialized, setRoutingInitialized] = useState(false);
+
+  // URL-based routing - sync on mount and when URL changes
+  useEffect(() => {
+    const path = window.location.pathname;
+    
+    // Handle /admin routes
+    if (path.startsWith('/admin')) {
+      setView('admin');
+      setRoutingInitialized(true);
+      return;
+    }
+    
+    // Handle announcement routes
+    if (path.startsWith('/anunt/')) {
+      const id = parseInt(path.split('/anunt/')[1]);
+      if (!isNaN(id)) {
+        setView({ type: 'announcement-detail', id } as any);
+        setRoutingInitialized(true);
+        return;
+      }
+    }
+    
+    if (path === '/anunturi' || path === '/anunturi/') {
+      setView('announcements' as any);
+      setRoutingInitialized(true);
+      return;
+    }
+    
+    // Map other routes
+    const routeMap: Record<string, ViewState> = {
+      '/': 'home',
+      '/home': 'home',
+      '/administration': 'administration',
+      '/documents': 'documents',
+      '/transparency': 'transparency',
+      '/contact': 'contact',
+      '/history': 'history',
+      '/services': 'services',
+      '/geography': 'geography',
+      '/economy': 'economy',
+      '/institutions': 'institutions',
+    };
+    
+    const mappedView = routeMap[path];
+    if (mappedView) {
+      setView(mappedView);
+    } else {
+      setView('home');
+    }
+    setRoutingInitialized(true);
+  }, []);
+
+  // Update URL when view changes (except for admin which handles its own routing)
+  useEffect(() => {
+    // Don't update URL until routing is initialized
+    if (!routingInitialized) {
+      return;
+    }
+    
+    const currentPath = window.location.pathname;
+    
+    // Don't update URL if view is admin - admin handles its own routing
+    if (view === 'admin' || (typeof view === 'string' && view.startsWith('admin-'))) {
+      return;
+    }
+    
+    // Don't update URL if view is an object (announcement detail) - handled separately
+    if (typeof view === 'object' && view !== null) {
+      return;
+    }
+    
+    // Map view to path
+    const pathMap: Record<string, string> = {
+      'home': '/',
+      'administration': '/administration',
+      'documents': '/documents',
+      'transparency': '/transparency',
+      'contact': '/contact',
+      'history': '/history',
+      'services': '/services',
+      'geography': '/geography',
+      'economy': '/economy',
+      'institutions': '/institutions',
+      'announcements': '/anunturi',
+      'admin': '/admin',
+      'admin-dashboard': '/admin',
+      'admin-publish-anunt': '/admin',
+      'admin-publish-decizie': '/admin',
+      'admin-publish-dispozitie': '/admin',
+    };
+    
+    const newPath = pathMap[view as string] || '/';
+    
+    // Always update URL when view changes, especially when going to 'home'
+    if (currentPath !== newPath) {
+      window.history.replaceState({}, '', newPath);
+    }
+  }, [view, routingInitialized]);
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      
+      if (path.startsWith('/admin')) {
+        setView('admin');
+        return;
+      }
+      
+      // Handle announcement routes
+      if (path.startsWith('/anunt/')) {
+        const id = parseInt(path.split('/anunt/')[1]);
+        if (!isNaN(id)) {
+          setView({ type: 'announcement-detail', id } as any);
+          return;
+        }
+      }
+      
+      if (path === '/anunturi' || path === '/anunturi/') {
+        setView('announcements' as any);
+        return;
+      }
+      
+      const routeMap: Record<string, ViewState> = {
+        '/': 'home',
+        '/home': 'home',
+        '/administration': 'administration',
+        '/documents': 'documents',
+        '/transparency': 'transparency',
+        '/contact': 'contact',
+        '/history': 'history',
+        '/services': 'services',
+        '/geography': 'geography',
+        '/economy': 'economy',
+        '/institutions': 'institutions',
+      };
+      
+      const mappedView = routeMap[path] || 'home';
+      setView(mappedView);
+    };
+    
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Apply font size to body
   useEffect(() => {
@@ -210,36 +369,52 @@ function App() {
   }, [view]);
 
   const renderView = () => {
-    switch (view) {
-      case 'home':
-        return <Home setView={setView} highContrast={highContrast} />;
-      case 'administration':
-        return <Administration highContrast={highContrast} />;
-      case 'documents':
-        return <Decisions highContrast={highContrast} />;
-      case 'transparency':
-        return <Transparency highContrast={highContrast} />;
-      case 'contact':
-        return <Contact highContrast={highContrast} />;
-      case 'history':
-        return <History highContrast={highContrast} />;
-      case 'services':
-        return <Services highContrast={highContrast} />;
-      case 'geography':
-        return <Geography highContrast={highContrast} />;
-      case 'economy':
-        return <Economy highContrast={highContrast} />;
-      case 'institutions':
-        return <Institutions highContrast={highContrast} />;
-      case 'admin':
-      case 'admin-dashboard':
-      case 'admin-publish-anunt':
-      case 'admin-publish-decizie':
-      case 'admin-publish-dispozitie':
-        return <Admin highContrast={highContrast} setView={setView} />;
-      default:
-        return <Home setView={setView} highContrast={highContrast} />;
+    // Handle announcement detail view (object with type and id)
+    if (typeof view === 'object' && view !== null && 'type' in view && (view as any).type === 'announcement-detail') {
+      const announcementId = (view as any).id;
+      if (announcementId && !isNaN(announcementId)) {
+        return <AnnouncementDetail highContrast={highContrast} setView={setView} announcementId={announcementId} />;
+      }
     }
+
+    // Handle string views
+    if (typeof view === 'string') {
+      switch (view) {
+        case 'home':
+          return <Home setView={setView} highContrast={highContrast} />;
+        case 'administration':
+          return <Administration highContrast={highContrast} />;
+        case 'documents':
+          return <Decisions highContrast={highContrast} />;
+        case 'transparency':
+          return <Transparency highContrast={highContrast} />;
+        case 'contact':
+          return <Contact highContrast={highContrast} />;
+        case 'history':
+          return <History highContrast={highContrast} />;
+        case 'services':
+          return <Services highContrast={highContrast} />;
+        case 'geography':
+          return <Geography highContrast={highContrast} />;
+        case 'economy':
+          return <Economy highContrast={highContrast} />;
+        case 'institutions':
+          return <Institutions highContrast={highContrast} />;
+        case 'announcements':
+          return <Announcements highContrast={highContrast} setView={setView} />;
+        case 'admin':
+        case 'admin-dashboard':
+        case 'admin-publish-anunt':
+        case 'admin-publish-decizie':
+        case 'admin-publish-dispozitie':
+          return <Admin highContrast={highContrast} setView={setView} />;
+        default:
+          return <Home setView={setView} highContrast={highContrast} />;
+      }
+    }
+
+    // Fallback
+    return <Home setView={setView} highContrast={highContrast} />;
   };
 
   return (

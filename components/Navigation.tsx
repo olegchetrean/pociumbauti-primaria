@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Search, ChevronDown, Home, FileText, Building2, Eye, Briefcase, Clock, MapPin, Wheat, Phone, Shield, ExternalLink } from 'lucide-react';
+import { Menu, X, ChevronDown, Home, FileText, Building2, Eye, Briefcase, Clock, MapPin, Wheat, Phone, Shield, ExternalLink } from 'lucide-react';
 import { ViewState } from '../types';
 
 interface NavProps {
@@ -112,13 +112,6 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
             <a href="https://servicii.gov.md" target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-yellow-400 transition-colors">
               Servicii.gov.md <ExternalLink size={10} />
             </a>
-            <button
-              onClick={() => setView('admin')}
-              className="flex items-center gap-1 hover:text-yellow-400 transition-colors"
-            >
-              <Shield size={12} />
-              Admin
-            </button>
           </div>
         </div>
       </div>
@@ -193,19 +186,8 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
               ))}
             </div>
 
-            {/* Search & Mobile Menu */}
+            {/* Mobile Menu Button */}
             <div className="flex items-center gap-4">
-              <div className={`hidden xl:flex items-center border rounded-full px-3 py-1.5 transition-colors focus-within:border-moldova-blue focus-within:ring-2 ring-blue-100 ${highContrast ? 'bg-gray-900 border-gray-700' : 'bg-moldova-cloud border-transparent'}`}>
-                <input
-                  type="text"
-                  placeholder="Căutare..."
-                  className={`outline-none bg-transparent text-sm w-32 placeholder-gray-400 ${highContrast ? 'text-white' : 'text-moldova-charcoal'}`}
-                  aria-label="Căutare în site"
-                />
-                <Search size={16} className={highContrast ? 'text-yellow-400' : 'text-moldova-blue'} />
-              </div>
-
-              {/* Mobile Menu Button */}
               <button
                 className={`lg:hidden p-2 rounded-md ${highContrast ? 'text-yellow-400' : 'text-moldova-charcoal'}`}
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
@@ -256,17 +238,6 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
                     );
                   });
                 })()}
-
-                {/* Admin Link */}
-                <div className="mt-6 pt-4 border-t border-gray-200">
-                  <button
-                    onClick={() => handleNavClick('admin')}
-                    className={`w-full text-left px-4 py-3 rounded-lg font-medium flex items-center gap-2 ${highContrast ? 'text-yellow-400' : 'text-moldova-steel'}`}
-                  >
-                    <Shield size={16} />
-                    Administrare
-                  </button>
-                </div>
 
                 {/* External Links */}
                 <div className="mt-4 space-y-2">

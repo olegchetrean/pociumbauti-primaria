@@ -32,7 +32,7 @@ export interface User {
 }
 
 export interface Announcement {
-  id: string;
+  id: number;
   titlu: string;
   categorie: 'general' | 'sedinta' | 'eveniment' | 'info' | 'achizitie' | 'concurs' | 'urgenta';
   data_publicare: string;

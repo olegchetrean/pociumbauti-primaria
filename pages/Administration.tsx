@@ -71,7 +71,7 @@ export const Administration: React.FC<Props> = ({ highContrast }) => {
                       <div className="flex items-center justify-center sm:justify-start gap-2">
                         <Phone size={16} className="opacity-70" />
                         <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
-                          <a href={`tel:${person.phone}`} className="hover:underline">{person.phone}</a>
+                        <a href={`tel:${person.phone}`} className="hover:underline">{person.phone}</a>
                           {person.id === "mayor" && (
                             <>
                               <span>,</span>

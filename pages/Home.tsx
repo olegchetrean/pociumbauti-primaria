@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { ANNOUNCEMENTS } from '../constants';
 import { ArrowRight, Calendar, FileText, MapPin, ChevronRight, AlertCircle, Phone, Clock } from 'lucide-react';
 import { ViewState } from '../types';
 
 interface HomeProps {
   setView: (view: ViewState) => void;
   highContrast: boolean;
+}
+
+interface Announcement {
+  id: number;
+  titlu: string;
+  categorie: string;
+  data_publicare: string;
+  continut: string;
+  continut_scurt: string;
+  imagine_url?: string | null;
+  prioritate: boolean;
+  views: number;
 }
 
 const HERO_IMAGES = [
@@ -16,6 +27,47 @@ const HERO_IMAGES = [
 
 export const Home: React.FC<HomeProps> = ({ setView, highContrast }) => {
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loadingAnnouncements, setLoadingAnnouncements] = useState(true);
+
+  // Загрузка объявлений из API
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        setLoadingAnnouncements(true);
+        const response = await fetch('/api/announcements?limit=4&prioritate=1');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch announcements');
+        }
+        
+        const data = await response.json();
+        // API возвращает массив напрямую
+        if (Array.isArray(data)) {
+          // Explicitly sort by date (newest first), then by ID (highest first)
+          // This ensures correct order even if API returns data in wrong order
+          const sorted = [...data].sort((a, b) => {
+            const dateA = new Date(a.data_publicare).getTime();
+            const dateB = new Date(b.data_publicare).getTime();
+            if (dateB !== dateA) {
+              return dateB - dateA; // Newer dates first
+            }
+            return b.id - a.id; // Higher ID first if dates are equal
+          });
+          setAnnouncements(sorted);
+        } else {
+          setAnnouncements([]);
+        }
+      } catch (error) {
+        console.error('Error fetching announcements:', error);
+        setAnnouncements([]);
+      } finally {
+        setLoadingAnnouncements(false);
+      }
+    };
+
+    fetchAnnouncements();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -182,15 +234,45 @@ export const Home: React.FC<HomeProps> = ({ setView, highContrast }) => {
             {/* ANNOUNCEMENT CARDS - "Community Pulse" */}
             <div className="mb-8 flex justify-between items-end">
                <h2 className={`text-2xl font-bold ${highContrast ? 'text-yellow-400' : 'text-moldova-charcoal'}`}>Pulsul Comunității</h2>
-               <button className={`text-sm font-semibold hover:underline ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}>Vezi toate noutățile</button>
+               <button 
+                 onClick={() => {
+                   setView('announcements' as any);
+                   window.history.pushState({}, '', '/anunturi');
+                 }}
+                 className={`text-sm font-semibold hover:underline ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}
+               >
+                 Vezi toate noutățile
+               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {ANNOUNCEMENTS.map((item) => (
+            <div className="flex flex-wrap gap-6">
+              {loadingAnnouncements ? (
+                <div className="w-full text-center py-8">
+                  <p className={`${highContrast ? 'text-gray-400' : 'text-moldova-steel'}`}>Se încarcă anunțurile...</p>
+                </div>
+              ) : announcements.length === 0 ? (
+                <div className="w-full text-center py-8">
+                  <p className={`${highContrast ? 'text-gray-400' : 'text-moldova-steel'}`}>Nu există anunțuri disponibile momentan.</p>
+                </div>
+              ) : (
+                announcements.map((item) => (
                 <article 
                   key={item.id} 
-                  className={`flex flex-col h-full rounded-lg p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-hover ${highContrast ? 'bg-gray-900 border border-gray-700' : 'bg-white shadow-soft'}`}
+                  className={`flex flex-col h-full rounded-lg p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-hover w-full md:w-[calc(50%-12px)] ${highContrast ? 'bg-gray-900 border border-gray-700' : 'bg-white shadow-soft'}`}
                 >
+                  {item.imagine_url && (
+                    <div className="mb-4 -mx-6 -mt-6">
+                      <img
+                        src={item.imagine_url}
+                        alt={item.titlu}
+                        className="w-full h-48 object-cover rounded-t-lg"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+                  
                   <div className="mb-4">
                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white ${
                         item.categorie === 'urgenta' ? 'bg-moldova-red' : 
@@ -214,11 +296,18 @@ export const Home: React.FC<HomeProps> = ({ setView, highContrast }) => {
                     {item.continut_scurt}
                   </p>
 
-                  <button className={`text-sm font-bold flex items-center gap-1 mt-auto transition-transform hover:translate-x-1 ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}>
+                  <button 
+                    onClick={() => {
+                      window.history.pushState({}, '', `/anunt/${item.id}`);
+                      window.location.reload();
+                    }}
+                    className={`text-sm font-bold flex items-center gap-1 mt-auto transition-transform hover:translate-x-1 ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}
+                  >
                     Citește mai mult <ArrowRight size={14} />
                   </button>
                 </article>
-              ))}
+                ))
+              )}
             </div>
 
           </div>

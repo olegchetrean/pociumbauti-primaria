@@ -8,6 +8,25 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 3000,
         host: '0.0.0.0',
+        proxy: {
+          '/api': {
+            target: 'http://localhost:3001',
+            changeOrigin: true
+          },
+          '/auth': {
+            target: 'http://localhost:3001',
+            changeOrigin: true
+          },
+          '/uploads': {
+            target: 'http://localhost:3001',
+            changeOrigin: true
+          },
+          // Proxy API requests to /admin/* endpoints (but not the /admin page itself or /admin/dashboard)
+          '^/admin/(anunturi|audit|csrf)': {
+            target: 'http://localhost:3001',
+            changeOrigin: true
+          }
+        }
       },
       plugins: [react()],
       define: {
