@@ -172,7 +172,7 @@ const Footer = ({ highContrast, setView }: { highContrast: boolean, setView: (v:
             &copy; {new Date().getFullYear()} Primăria Pociumbăuți. Toate drepturile rezervate.
           </p>
           <p className="flex items-center gap-1">
-            Dezvoltat cu <Heart size={12} className="text-red-500" /> conform HG 728/2023
+            Dezvoltat de <a className='text-white' href="https://megapromoting.com/" target="_blank" rel="noopener noreferrer">MegaPromoting</a>
           </p>
           <div className="flex gap-4">
             <a href="#" className="hover:underline">Politică GDPR</a>

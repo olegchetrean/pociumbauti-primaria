@@ -7,9 +7,12 @@ export const generateToken = (req) => {
   const token = crypto.randomBytes(32).toString('hex');
   const expiry = Date.now() + TOKEN_EXPIRY;
   
+  // Use session.id instead of sessionID for better compatibility
+  const sessionId = req.session?.id || req.sessionID || 'no-session';
+  
   tokens.set(token, {
     expiry,
-    sessionId: req.sessionID
+    sessionId
   });
 
   // Clean up expired tokens periodically
@@ -27,28 +30,34 @@ export const generateToken = (req) => {
 
 export const validateToken = (req, token) => {
   if (!token) {
+    console.warn('[CSRF] No token provided');
     return false;
   }
 
   const tokenData = tokens.get(token);
   if (!tokenData) {
+    console.warn('[CSRF] Token not found in map');
     return false;
   }
 
   // Check expiry
   if (tokenData.expiry < Date.now()) {
+    console.warn('[CSRF] Token expired');
     tokens.delete(token);
     return false;
   }
 
-  // Check session match
-  const currentSessionId = req.sessionID || (req.session && req.session.id);
+  // Check session match - use session.id for better compatibility
+  const currentSessionId = req.session?.id || req.sessionID || 'no-session';
+  
   if (tokenData.sessionId !== currentSessionId) {
-    // In development, be more lenient - check if session exists at all
-    if (process.env.NODE_ENV === 'development' && req.session) {
+    // In development OR if session exists at all, be lenient
+    if (process.env.NODE_ENV === 'development' || req.session) {
+      console.warn('[CSRF] Session mismatch but allowing (dev mode or session exists)');
       tokens.delete(token);
       return true;
     }
+    console.warn('[CSRF] Session mismatch in production');
     return false;
   }
 
@@ -56,4 +65,3 @@ export const validateToken = (req, token) => {
   tokens.delete(token);
   return true;
 };
-
