@@ -20,17 +20,42 @@ export const Transparency: React.FC<Props> = ({ highContrast }) => {
                <h2 className="text-2xl font-bold">Buget Local</h2>
             </div>
             <p className="mb-6 opacity-80">
-              Bugetul satul Pociumbăuți pentru anul 2025 este estimat la 3.200.000 MDL.
+              Bugetul satului Pociumbăuți pentru anul 2026.
               Principalele surse de venit și direcții de cheltuieli.
             </p>
             <ul className="space-y-3 mb-6">
                <li className="flex justify-between items-center p-3 rounded bg-gray-50 dark:bg-gray-800">
-                  <span className="font-medium text-sm">Buget 2025 (Proiect)</span>
-                  <button className="text-xs font-bold text-moldova-blue hover:underline">Descarcă PDF</button>
+                  <span className="font-medium text-sm">Buget Local 2026 cu Anexe</span>
+                  <a 
+                    href="/uploads/file/06-06 buget cu anexe semnat.pdf" 
+                    download 
+                    className="flex items-center gap-1 text-xs font-bold text-moldova-blue hover:underline"
+                  >
+                    <Download size={14} />
+                    Descarcă PDF
+                  </a>
                </li>
                <li className="flex justify-between items-center p-3 rounded bg-gray-50 dark:bg-gray-800">
-                  <span className="font-medium text-sm">Executare Buget 2024 (Q3)</span>
-                  <button className="text-xs font-bold text-moldova-blue hover:underline">Descarcă PDF</button>
+                  <span className="font-medium text-sm">Taxe Locale 2026</span>
+                  <a 
+                    href="/uploads/file/06-04 taxe.signed.signed.signed.pdf" 
+                    download 
+                    className="flex items-center gap-1 text-xs font-bold text-moldova-blue hover:underline"
+                  >
+                    <Download size={14} />
+                    Descarcă PDF
+                  </a>
+               </li>
+               <li className="flex justify-between items-center p-3 rounded bg-gray-50 dark:bg-gray-800">
+                  <span className="font-medium text-sm">Impozite Locale 2026</span>
+                  <a 
+                    href="/uploads/file/06-05 impozite.signed.signed.signed.pdf" 
+                    download 
+                    className="flex items-center gap-1 text-xs font-bold text-moldova-blue hover:underline"
+                  >
+                    <Download size={14} />
+                    Descarcă PDF
+                  </a>
                </li>
             </ul>
          </div>
@@ -46,17 +71,10 @@ export const Transparency: React.FC<Props> = ({ highContrast }) => {
             <p className="mb-6 opacity-80">
               Planul anual de achiziții și contractele atribuite. Transparență totală în cheltuirea banilor publici.
             </p>
-            <ul className="space-y-3 mb-6">
-               <li className="flex justify-between items-center p-3 rounded bg-gray-50 dark:bg-gray-800">
-                  <span className="font-medium text-sm">Plan Achiziții 2025</span>
-                  <button className="text-xs font-bold text-moldova-blue hover:underline">Descarcă PDF</button>
-               </li>
-               <li className="flex justify-between items-center p-3 rounded bg-gray-50 dark:bg-gray-800">
-                  <span className="font-medium text-sm">Raport Achiziții 2024</span>
-                  <button className="text-xs font-bold text-moldova-blue hover:underline">Descarcă PDF</button>
-               </li>
-            </ul>
-            <a href="https://achizitii.md" target="_blank" rel="noreferrer" className="text-sm font-bold text-green-600 hover:underline">
+            <p className="text-sm opacity-70 mb-4">
+              Informațiile despre achizițiile publice sunt disponibile pe portalul național.
+            </p>
+            <a href="https://mtender.gov.md" target="_blank" rel="noreferrer" className="text-sm font-bold text-green-600 hover:underline">
               Vezi pe mtender.gov.md &rarr;
             </a>
          </div>
@@ -73,11 +91,14 @@ export const Transparency: React.FC<Props> = ({ highContrast }) => {
               Participă la luarea deciziilor. Primăria organizează consultări publice pentru toate proiectele majore.
             </p>
             <div className="bg-yellow-50 dark:bg-gray-800 p-4 rounded-lg border border-yellow-200 dark:border-gray-700">
-               <h3 className="font-bold mb-2">🟢 CONSULTARE ACTIVĂ: Proiect Buget 2025</h3>
-               <p className="text-sm mb-4">Așteptăm propunerile dumneavoastră până la data de 20.12.2024.</p>
-               <button className={`px-4 py-2 rounded font-bold text-sm ${highContrast ? 'bg-yellow-400 text-black' : 'bg-moldova-blue text-white'}`}>
+               <h3 className="font-bold mb-2">🟢 CONSULTARE ACTIVĂ: Proiect Buget 2026</h3>
+               <p className="text-sm mb-4">Așteptăm propunerile dumneavoastră. Contactați-ne la primaria.pociumbauti@gmail.com</p>
+               <a 
+                 href="mailto:primaria.pociumbauti@gmail.com?subject=Propunere Buget 2026"
+                 className={`inline-block px-4 py-2 rounded font-bold text-sm ${highContrast ? 'bg-yellow-400 text-black' : 'bg-moldova-blue text-white'}`}
+               >
                   Trimite Opinie
-               </button>
+               </a>
             </div>
          </div>
       </div>

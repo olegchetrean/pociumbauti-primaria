@@ -4,7 +4,6 @@ import { Navigation } from './components/Navigation';
 import { AccessibilityMenu } from './components/AccessibilityMenu';
 import { Home } from './pages/Home';
 import { Administration } from './pages/Administration';
-import { Decisions } from './pages/Decisions';
 import { Contact } from './pages/Contact';
 import { History } from './pages/History';
 import { Services } from './pages/Services';
@@ -14,6 +13,7 @@ import { Geography } from './pages/Geography';
 import { Economy } from './pages/Economy';
 import { Institutions } from './pages/Institutions';
 import { Announcements } from './pages/Announcements';
+import { Documents } from './pages/Documents';
 import { AnnouncementDetail } from './pages/AnnouncementDetail';
 import { Shield, MapPin, Phone, Mail, Clock, ExternalLink, Heart } from 'lucide-react';
 import { CONTACT_INFO, USEFUL_LINKS } from './constants';
@@ -385,7 +385,7 @@ function App() {
         case 'administration':
           return <Administration highContrast={highContrast} />;
         case 'documents':
-          return <Decisions highContrast={highContrast} />;
+          return <Documents highContrast={highContrast} />;
         case 'transparency':
           return <Transparency highContrast={highContrast} />;
         case 'contact':
