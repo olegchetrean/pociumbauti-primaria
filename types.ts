@@ -332,10 +332,10 @@ export interface EconomyData {
   }>;
 
   agricultura: {
-    suprafataAgricola: string;
+    suprafataTotala: string;
     terenArabil: string;
     pasuni: string;
-    viiLivezi: string;
+    livezi: string;
 
     culturiPrincipale: Array<{
       cultura: string;

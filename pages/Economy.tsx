@@ -1,6 +1,6 @@
 import React from 'react';
 import { ECONOMY_DATA } from '../constants';
-import { Wheat, TrendingUp, TrendingDown, Store, Briefcase, Coins, AlertTriangle, Lightbulb } from 'lucide-react';
+import { Wheat, TrendingUp, Store, Coins, AlertTriangle, Lightbulb, MapPin } from 'lucide-react';
 
 interface Props {
   highContrast: boolean;
@@ -74,7 +74,7 @@ export const Economy: React.FC<Props> = ({ highContrast }) => {
                       );
                       acc.totalAngle = endAngle;
                       return acc;
-                    }, { paths: [] as JSX.Element[], totalAngle: 0 }).paths}
+                    }, { paths: [] as React.ReactElement[], totalAngle: 0 }).paths}
                   </svg>
                 </div>
               </div>
@@ -88,13 +88,13 @@ export const Economy: React.FC<Props> = ({ highContrast }) => {
               </div>
             </div>
 
-            {/* Suprafață Agricolă */}
+            {/* Resurse Funciare */}
             <div className={cardClass}>
-              <h3 className={subheadingClass}>Suprafață Agricolă</h3>
+              <h3 className={subheadingClass}>Resurse Funciare</h3>
               <div className="space-y-4">
                 <div className={`p-4 rounded-lg ${highContrast ? 'bg-gray-800' : 'bg-green-50'}`}>
-                  <p className="text-3xl font-bold text-green-600">{ECONOMY_DATA.agricultura.suprafataAgricola}</p>
-                  <p className={`text-sm ${textClass}`}>Suprafață agricolă totală</p>
+                  <p className="text-3xl font-bold text-green-600">{ECONOMY_DATA.agricultura.suprafataTotala}</p>
+                  <p className={`text-sm ${textClass}`}>Suprafața totală a satului</p>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center">
@@ -111,9 +111,9 @@ export const Economy: React.FC<Props> = ({ highContrast }) => {
                   </div>
                   <div className="text-center">
                     <p className={`text-xl font-bold ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}>
-                      {ECONOMY_DATA.agricultura.viiLivezi}
+                      {ECONOMY_DATA.agricultura.livezi}
                     </p>
-                    <p className={`text-xs ${textClass}`}>Vii și livezi</p>
+                    <p className={`text-xs ${textClass}`}>Livezi</p>
                   </div>
                 </div>
               </div>
@@ -358,6 +358,47 @@ export const Economy: React.FC<Props> = ({ highContrast }) => {
               <AlertTriangle className="mx-auto text-red-500" size={32} />
               <p className={`mt-2 font-bold text-lg ${highContrast ? 'text-white' : ''}`}>Problemă</p>
               <p className={`text-sm ${textClass}`}>{ECONOMY_DATA.agricultura.mecanizare.probleme}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Amplasare Geografică */}
+        <section>
+          <div className="flex items-center gap-3 mb-8">
+            <div className={`p-3 rounded-full ${highContrast ? 'bg-yellow-400 text-black' : 'bg-moldova-blue text-white'}`}>
+              <MapPin size={24} />
+            </div>
+            <h2 className={`text-3xl font-bold ${highContrast ? 'text-yellow-400' : 'text-moldova-charcoal'}`}>
+              Amplasare Geografică
+            </h2>
+          </div>
+          <div className={cardClass}>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5629.345978042137!2d27.32241973413662!3d47.99588339545808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4734a9000bc85f2f%3A0x386458d7f0c65ea7!2zUHJpbcSDcmlhIFBvY2l1bWLEg3XFo2k!5e1!3m2!1sro!2s!4v1767943298942!5m2!1sro!2s"
+                  width="100%"
+                  height="350"
+                  style={{ border: 0, borderRadius: '8px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Harta satului Pociumbăuți"
+                />
+              </div>
+              <div className="space-y-4">
+                <h3 className={subheadingClass}>Date Geografice</h3>
+                <div className={`p-4 rounded-lg ${highContrast ? 'bg-gray-800' : 'bg-blue-50'}`}>
+                  <p className={`text-sm ${textClass}`}>Suprafață totală</p>
+                  <p className={`text-2xl font-bold ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}>1454,83 ha</p>
+                </div>
+                <div className="space-y-2">
+                  <p className={textClass}><strong>Raion:</strong> Rîșcani</p>
+                  <p className={textClass}><strong>Distanța până la Rîșcani:</strong> ~15 km</p>
+                  <p className={textClass}><strong>Distanța până la Bălți:</strong> ~45 km</p>
+                  <p className={textClass}><strong>Coordonate:</strong> 47°59'N, 27°19'E</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

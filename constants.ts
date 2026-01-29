@@ -255,7 +255,7 @@ export const HISTORY_EVENTS: HistoryEvent[] = [
   },
   {
     year: "1815",
-    title: "Construcția Bisericii 'Sf. Arhanghel Mihail'",
+    title: "Construcția Bisericii 'Sf. Arhangheli Mihail și Gavriil'",
     description: "Ctitorită de Vasile Stroescu, biserica din piatră în stil moldovenesc-bizantin devine centrul spiritual al comunității. Renovată în 1925, 1990 și 2010, rămâne funcțională până astăzi.",
     period: "Imperiul Rus",
     important: true
@@ -365,10 +365,10 @@ export const ECONOMY_DATA: EconomyData = {
   ],
 
   agricultura: {
-    suprafataAgricola: "~800-1000 hectare",
-    terenArabil: "950 ha",
-    pasuni: "50 ha",
-    viiLivezi: "30 ha (abandonate parțial)",
+    suprafataTotala: "1454,83 ha",
+    terenArabil: "801,47 ha",
+    pasuni: "277,65 ha",
+    livezi: "36,75 ha",
 
     culturiPrincipale: [
       { cultura: "Grâu de toamnă", suprafata: 40, randament: "2.5-3.5 tone/ha", pret: "3,500-4,000 MDL/tonă" },
@@ -539,7 +539,7 @@ export const INSTITUTIONS: Institution[] = [
   },
   {
     id: "biserica",
-    nume: "Biserica 'Sfântul Arhanghel Mihail'",
+    nume: "Biserica 'Sfinții Arhangheli Mihail și Gavriil'",
     tip: "Lăcaș de cult",
     adresa: "Pociumbăuți, centru",
     descriere: "Construită în 1815, ctitorită de Vasile Stroescu. Stil moldovenesc-bizantin. Renovată în 1925, 1990 și 2010.",
@@ -672,7 +672,7 @@ export const CULTURAL_EVENTS = [
     id: "hram",
     nume: "Hramul Satului",
     data: "21 noiembrie",
-    descriere: "Ziua Sfântului Arhanghel Mihail - patronul bisericii. Liturghie specială, procesiune religioasă, masă comună în curtea bisericii, muzică populară și dansuri tradiționale.",
+    descriere: "Ziua Sfinților Arhangheli Mihail și Gavriil - patronii bisericii. Liturghie specială, procesiune religioasă, masă comună în curtea bisericii, muzică populară și dansuri tradiționale.",
     traditie: true
   },
   {
@@ -830,7 +830,7 @@ export const LATEST_DISPOSITIONS: Disposition[] = [
 
 export const ANNOUNCEMENTS: Announcement[] = [
   {
-    id: "news-1",
+    id: 1,
     titlu: "Ședința Consiliului Local - 15 decembrie 2024",
     categorie: "sedinta",
     data_publicare: "2024-12-11",
@@ -840,7 +840,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
     views: 45
   },
   {
-    id: "news-2",
+    id: 2,
     titlu: "Festival 'Nunta Moldovenească' - ediția 2025",
     categorie: "eveniment",
     data_publicare: "2024-12-10",
@@ -851,7 +851,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
     views: 120
   },
   {
-    id: "news-3",
+    id: 3,
     titlu: "Consultări Publice: Buget 2025",
     categorie: "info",
     data_publicare: "2024-12-05",
@@ -861,7 +861,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
     views: 80
   },
   {
-    id: "news-4",
+    id: 4,
     titlu: "Reconstrucția Monumentului Eroilor - Actualizare",
     categorie: "info",
     data_publicare: "2024-12-01",
@@ -930,14 +930,14 @@ export const MOCK_LOGS: AdminLog[] = [
 export const OFFICIAL_SYMBOLS = {
   stema: {
     aprobare: "14 decembrie 2023",
-      descriere: "Stema satul include simboluri agricole (spice de grâu, soare) și elemente istorice (trandafirii familiei Rosetti, potcoava familiei Stroescu).",
-    culori: ["Albastru", "Aur", "Verde"],
-    semnificatie: "Moldova, prosperitate, natură"
+    descriere: "Scut despicat nebulos; în prima partițiune, pe argint, trei roze heraldice în pal, roșii; în partițiunea a doua, pe azur, o cruce recruciată, de aur, surmontând o potcoavă răsturnată, de argint; peste linia de despicare, un pal diminuat broșând, de aur. Scutul timbrat de o coroană sătească de aur.",
+    culori: ["Argint", "Roșu", "Azur", "Aur"],
+    semnificatie: "Trandafirii simbolizează familia Rosetti, potcoava – familia Stroescu, crucea – credința, coroana – statutul de sat"
   },
   drapel: {
     aprobare: "14 decembrie 2023",
-      descriere: "Drapelul satul reflectă culorile și simbolurile stemei.",
-    culori: ["Albastru", "Aur", "Verde"]
+    descriere: "Pânză pătrată, despicată vertical (1:2), purtând în treimea de la hampă, albă, trei roze heraldice în pal, roșii, și având batantul (2/3) fasciat în șapte brâie, albastru și alb, cu un pal diminuat (1/12) broșând pe mijloc, galben.",
+    culori: ["Alb", "Roșu", "Albastru", "Galben"]
   },
   motto: "Pociumbăuți - 255 ani istorie, o comunitate mândră care merge înainte"
 };

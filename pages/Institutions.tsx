@@ -180,7 +180,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
           <div className="flex items-center gap-3 mb-6">
             <Church className="text-purple-500" size={32} />
             <h2 className={`text-3xl font-bold ${highContrast ? 'text-yellow-400' : 'text-moldova-charcoal'}`}>
-              Biserica "Sfântul Arhanghel Mihail"
+              Biserica "Sfinții Arhangheli Mihail și Gavriil"
             </h2>
           </div>
 
@@ -188,7 +188,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
             <div>
               <img
                 src="/uploads/photos/thumbs/biserica1.jpg"
-                alt="Biserica Sfântul Arhanghel Mihail"
+                alt="Biserica Sfinții Arhangheli Mihail și Gavriil"
                 className="w-full h-64 object-cover rounded-lg"
               />
             </div>
@@ -204,7 +204,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
               </p>
               <div className={`p-4 rounded-lg ${highContrast ? 'bg-gray-800' : 'bg-purple-50'}`}>
                 <p className="font-semibold">Hramul Bisericii</p>
-                <p className={textClass}>21 Noiembrie - Ziua Sfântului Arhanghel Mihail</p>
+                <p className={textClass}>8 Noiembrie - Ziua Sfinților Arhangheli Mihail și Gavriil</p>
               </div>
             </div>
           </div>
@@ -259,7 +259,7 @@ export const Institutions: React.FC<Props> = ({ highContrast }) => {
               </h2>
               <p className="text-white/90 mb-6 leading-relaxed">
                 Cea mai importantă sărbătoare a comunității Pociumbăuți coincide cu Ziua Sfântului
-                Arhanghel Mihail, patronul bisericii noastre. Întreaga comunitate se reunește pentru
+                Arhangheli Mihail și Gavriil, patronii bisericii noastre. Întreaga comunitate se reunește pentru
                 liturghie specială, procesiune religioasă, masă comună în curtea bisericii și
                 petrecere cu muzică populară și dansuri tradiționale.
               </p>
