@@ -40,6 +40,7 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
       children: [
         { id: 'documents', label: 'Decizii Consiliu Local' },
         { id: 'documents', label: 'Dispoziții Primar' },
+        { id: 'proiecte-decizii' as ViewState, label: 'Proiecte de Decizii' },
       ]
     },
     {
@@ -64,6 +65,7 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
     { id: 'history', label: 'Istoric și Identitate', section: 'Despre Noi' },
     { id: 'institutions', label: 'Instituții Publice', section: 'Despre Noi' },
     { id: 'documents', label: 'Decizii și Dispoziții', section: 'Acte Oficiale' },
+    { id: 'proiecte-decizii' as ViewState, label: 'Proiecte de Decizii', section: 'Acte Oficiale' },
     { id: 'transparency', label: 'Buget și Finanțe', section: 'Transparență' },
     { id: 'economy', label: 'Economie Locală', section: 'Transparență' },
     { id: 'services', label: 'Servicii Publice' },

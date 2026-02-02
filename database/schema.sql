@@ -107,6 +107,27 @@ INSERT INTO `anunturi` (`titlu`, `categorie`, `data_publicare`, `continut`, `con
 'Bine ați venit pe noul site oficial al Primăriei Pociumbăuți, dezvoltat conform HG 728/2023.',
 1, 1, 1);
 
+-- ═══════════════════════════════════════════════════════════════════════════════
+--                              TABELUL PROIECTE_DECIZII
+-- ═══════════════════════════════════════════════════════════════════════════════
+DROP TABLE IF EXISTS `proiecte_decizii`;
+CREATE TABLE `proiecte_decizii` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `titlu` VARCHAR(255) NOT NULL,
+    `descriere` TEXT DEFAULT NULL,
+    `document` VARCHAR(255) NOT NULL COMMENT 'Fișier Word/PDF atașat',
+    `data_publicare` DATE NOT NULL,
+    `vizibil` TINYINT(1) NOT NULL DEFAULT 1,
+    `created_by` INT UNSIGNED DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `idx_data_publicare` (`data_publicare`),
+    KEY `idx_vizibil` (`vizibil`),
+    CONSTRAINT `fk_proiecte_user` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+COMMENT='Proiecte de decizii pentru consultare publică';
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ═══════════════════════════════════════════════════════════════════════════════

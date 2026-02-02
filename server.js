@@ -9,6 +9,7 @@ import adminRoutes from './backend/routes/admin.js';
 import apiRoutes from './backend/routes/api.js';
 import authRoutes from './backend/routes/auth.js';
 import galleryRoutes from './backend/routes/gallery.js';
+import proiecteRoutes from './backend/routes/proiecte.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,6 +60,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
 app.use('/api', apiRoutes);
 app.use('/api/gallery', galleryRoutes);
+app.use('/api/proiecte-decizii', proiecteRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 

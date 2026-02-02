@@ -6,6 +6,7 @@ export type ViewState =
   | 'home'
   | 'administration'
   | 'documents'
+  | 'proiecte-decizii'
   | 'history'
   | 'contact'
   | 'services'

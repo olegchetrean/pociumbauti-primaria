@@ -3,7 +3,7 @@ import {
   Lock, LogOut, Check, AlertTriangle, Eye, EyeOff,
   FileText, Clipboard, Megaphone, Image as ImageIcon,
   Shield, Activity, Calendar, Upload, Save, X, ArrowLeft,
-  Camera, Trash2, Plus, FolderPlus, Images, Pencil
+  Camera, Trash2, Plus, FolderPlus, Images, Pencil, FileUp, Download
 } from 'lucide-react';
 import { ViewState, AlbumCategory } from '../types';
 
@@ -20,7 +20,7 @@ const CATEGORY_LABELS: Record<AlbumCategory, string> = {
 };
 
 export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
-  const [internalView, setInternalView] = useState<'login' | 'dashboard' | 'form' | 'gallery'>('login');
+  const [internalView, setInternalView] = useState<'login' | 'dashboard' | 'form' | 'gallery' | 'proiecte'>('login');
   const [activeForm, setActiveForm] = useState<string>('');
   
   // Login State
@@ -69,6 +69,18 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
   });
   const [editingAlbum, setEditingAlbum] = useState<any>(null);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
+
+  // Proiecte de decizii state
+  const [proiecteList, setProiecteList] = useState<any[]>([]);
+  const [loadingProiecte, setLoadingProiecte] = useState(false);
+  const [proiectForm, setProiectForm] = useState({
+    titlu: '',
+    descriere: '',
+    vizibil: true
+  });
+  const [proiectDocument, setProiectDocument] = useState<File | null>(null);
+  const [editingProiect, setEditingProiect] = useState<any>(null);
+  const [proiectFormLoading, setProiectFormLoading] = useState(false);
 
   // Sync URL with internal view
   useEffect(() => {
@@ -190,6 +202,13 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
   useEffect(() => {
     if (isAuthenticated && internalView === 'gallery') {
       fetchAlbums();
+    }
+  }, [isAuthenticated, internalView]);
+
+  // Fetch proiecte when proiecte view is opened
+  useEffect(() => {
+    if (isAuthenticated && internalView === 'proiecte') {
+      fetchProiecte();
     }
   }, [isAuthenticated, internalView]);
 
@@ -623,7 +642,7 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
 
   const handleSetCover = async (photoId: number) => {
     if (!selectedAlbum) return;
-    
+
     try {
       const response = await fetch(`/api/gallery/admin/albums/${selectedAlbum.id}/cover/${photoId}`, {
         method: 'POST',
@@ -637,6 +656,110 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
     } catch (err) {
       console.error('Error setting cover:', err);
     }
+  };
+
+  // Proiecte de decizii functions
+  const fetchProiecte = async () => {
+    try {
+      setLoadingProiecte(true);
+      const response = await fetch('/api/proiecte-decizii/admin', { credentials: 'include' });
+      if (response.ok) {
+        const data = await response.json();
+        setProiecteList(data.proiecte || []);
+      }
+    } catch (err) {
+      console.error('Error fetching projects:', err);
+    } finally {
+      setLoadingProiecte(false);
+    }
+  };
+
+  const handleCreateProiect = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!proiectDocument && !editingProiect) {
+      setError('Documentul este obligatoriu');
+      return;
+    }
+
+    setProiectFormLoading(true);
+    setError(null);
+
+    try {
+      let token = csrfToken;
+      if (!token) {
+        const csrfRes = await fetch('/admin/csrf', { credentials: 'include' });
+        const csrfData = await csrfRes.json();
+        token = csrfData.csrf_token;
+        setCsrfToken(token);
+      }
+
+      const formData = new FormData();
+      formData.append('titlu', proiectForm.titlu);
+      formData.append('descriere', proiectForm.descriere);
+      formData.append('vizibil', proiectForm.vizibil ? '1' : '0');
+      formData.append('csrf_token', token);
+
+      if (proiectDocument) {
+        formData.append('document', proiectDocument);
+      }
+
+      const endpoint = editingProiect
+        ? `/api/proiecte-decizii/admin/${editingProiect.id}`
+        : '/api/proiecte-decizii/admin';
+
+      const response = await fetch(endpoint, {
+        method: editingProiect ? 'PUT' : 'POST',
+        credentials: 'include',
+        body: formData
+      });
+
+      if (response.ok) {
+        showNotification(editingProiect ? 'Proiectul a fost actualizat!' : 'Proiectul a fost creat!');
+        setProiectForm({ titlu: '', descriere: '', vizibil: true });
+        setProiectDocument(null);
+        setEditingProiect(null);
+        fetchProiecte();
+        // Refresh CSRF token
+        const csrfRes = await fetch('/admin/csrf', { credentials: 'include' });
+        const csrfData = await csrfRes.json();
+        if (csrfData.csrf_token) setCsrfToken(csrfData.csrf_token);
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Eroare la salvarea proiectului');
+      }
+    } catch (err) {
+      setError('Eroare de conexiune');
+    } finally {
+      setProiectFormLoading(false);
+    }
+  };
+
+  const handleDeleteProiect = async (proiectId: number) => {
+    if (!confirm('Sigur doriți să ștergeți acest proiect? Documentul va fi șters.')) return;
+
+    try {
+      const response = await fetch(`/api/proiecte-decizii/admin/${proiectId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        showNotification('Proiectul a fost șters!');
+        fetchProiecte();
+      }
+    } catch (err) {
+      console.error('Error deleting project:', err);
+    }
+  };
+
+  const handleEditProiect = (proiect: any) => {
+    setEditingProiect(proiect);
+    setProiectForm({
+      titlu: proiect.titlu,
+      descriere: proiect.descriere || '',
+      vizibil: Boolean(proiect.vizibil)
+    });
+    setProiectDocument(null);
   };
 
   // --- LOGIN PAGE ---
@@ -899,13 +1022,27 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
                   window.history.pushState({}, '', '/admin/gallery');
                 }}
                 className={`p-4 rounded-lg border-2 border-dashed flex flex-col items-center gap-2 transition-colors ${
-                  highContrast 
-                    ? 'border-yellow-400 text-yellow-400 hover:bg-gray-800' 
+                  highContrast
+                    ? 'border-yellow-400 text-yellow-400 hover:bg-gray-800'
                     : 'border-green-600 text-green-600 hover:bg-green-50'
                 }`}
               >
                 <Camera size={24} />
                 <span className="font-medium">Galerie Foto</span>
+              </button>
+              <button
+                onClick={() => {
+                  setInternalView('proiecte');
+                  window.history.pushState({}, '', '/admin/proiecte');
+                }}
+                className={`p-4 rounded-lg border-2 border-dashed flex flex-col items-center gap-2 transition-colors ${
+                  highContrast
+                    ? 'border-yellow-400 text-yellow-400 hover:bg-gray-800'
+                    : 'border-purple-600 text-purple-600 hover:bg-purple-50'
+                }`}
+              >
+                <FileUp size={24} />
+                <span className="font-medium">Proiecte de Decizii</span>
               </button>
             </div>
           </div>
@@ -1171,6 +1308,236 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
                 <div className={`text-center py-16 ${highContrast ? 'text-gray-500' : 'text-gray-400'}`}>
                   <Images size={48} className="mx-auto mb-4 opacity-50" />
                   <p>Selectați un album din stânga pentru a vedea și gestiona fotografiile.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {notification && (
+          <div className="fixed bottom-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg z-50">
+            {notification}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // --- PROIECTE VIEW ---
+  if (internalView === 'proiecte') {
+    return (
+      <div className={`min-h-screen p-8 ${highContrast ? 'bg-black text-white' : 'bg-gray-50'}`}>
+        <div className="max-w-6xl mx-auto">
+          <button
+            onClick={() => {
+              setInternalView('dashboard');
+              setEditingProiect(null);
+              setProiectForm({ titlu: '', descriere: '', vizibil: true });
+              setProiectDocument(null);
+              window.history.pushState({}, '', '/admin/dashboard');
+            }}
+            className={`mb-4 flex items-center gap-2 ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}
+          >
+            <ArrowLeft size={18} />
+            Înapoi la Dashboard
+          </button>
+
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h1 className={`text-3xl font-bold ${highContrast ? 'text-yellow-400' : 'text-gray-900'}`}>
+                Proiecte de Decizii
+              </h1>
+              <p className={`mt-2 ${highContrast ? 'text-gray-400' : 'text-gray-600'}`}>
+                Încărcați documente Word sau PDF pentru consultare publică
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left: Form */}
+            <div className={`p-6 rounded-lg ${highContrast ? 'bg-gray-900 border border-gray-700' : 'bg-white shadow'}`}>
+              <h2 className={`text-lg font-bold mb-4 flex items-center gap-2 ${highContrast ? 'text-yellow-400' : 'text-gray-900'}`}>
+                <FileUp size={20} />
+                {editingProiect ? 'Editează Proiect' : 'Încarcă Proiect Nou'}
+              </h2>
+
+              {error && (
+                <div className="mb-4 p-3 rounded-md bg-red-50 border border-red-200 text-red-700 text-sm">
+                  {error}
+                </div>
+              )}
+
+              <form onSubmit={handleCreateProiect} className="space-y-4">
+                <div>
+                  <label className={`block text-sm font-bold mb-1 ${highContrast ? 'text-white' : 'text-gray-700'}`}>
+                    Titlu *
+                  </label>
+                  <input
+                    type="text"
+                    value={proiectForm.titlu}
+                    onChange={(e) => setProiectForm({ ...proiectForm, titlu: e.target.value })}
+                    placeholder="Titlul proiectului de decizie..."
+                    className={`w-full px-3 py-2 border rounded-md text-sm ${
+                      highContrast ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className={`block text-sm font-bold mb-1 ${highContrast ? 'text-white' : 'text-gray-700'}`}>
+                    Descriere (opțional)
+                  </label>
+                  <textarea
+                    value={proiectForm.descriere}
+                    onChange={(e) => setProiectForm({ ...proiectForm, descriere: e.target.value })}
+                    placeholder="Descriere scurtă..."
+                    rows={3}
+                    className={`w-full px-3 py-2 border rounded-md text-sm ${
+                      highContrast ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                  />
+                </div>
+
+                <div>
+                  <label className={`block text-sm font-bold mb-1 ${highContrast ? 'text-white' : 'text-gray-700'}`}>
+                    Document {editingProiect ? '(opțional - înlocuiește)' : '*'}
+                  </label>
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) => setProiectDocument(e.target.files?.[0] || null)}
+                    className={`w-full px-3 py-2 border rounded-md text-sm ${
+                      highContrast ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                  />
+                  <p className={`text-xs mt-1 ${highContrast ? 'text-gray-500' : 'text-gray-400'}`}>
+                    Formate acceptate: PDF, DOC, DOCX (max 100MB)
+                  </p>
+                  {editingProiect && (
+                    <p className={`text-xs mt-1 ${highContrast ? 'text-yellow-400' : 'text-blue-600'}`}>
+                      Document actual: {editingProiect.document}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="submit"
+                    disabled={proiectFormLoading}
+                    className={`flex-1 py-2 rounded-md text-sm font-medium flex items-center justify-center gap-2 ${
+                      proiectFormLoading
+                        ? 'opacity-50 cursor-not-allowed'
+                        : highContrast
+                          ? 'bg-yellow-400 text-black hover:bg-yellow-500'
+                          : 'bg-purple-600 text-white hover:bg-purple-700'
+                    }`}
+                  >
+                    {proiectFormLoading ? (
+                      <Activity size={16} className="animate-spin" />
+                    ) : editingProiect ? (
+                      <Save size={16} />
+                    ) : (
+                      <Upload size={16} />
+                    )}
+                    {editingProiect ? 'Salvează' : 'Încarcă'}
+                  </button>
+                  {editingProiect && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingProiect(null);
+                        setProiectForm({ titlu: '', descriere: '', vizibil: true });
+                        setProiectDocument(null);
+                        setError(null);
+                      }}
+                      className={`px-4 py-2 rounded-md text-sm ${
+                        highContrast ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-700'
+                      }`}
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+
+            {/* Right: List */}
+            <div className={`lg:col-span-2 p-6 rounded-lg ${highContrast ? 'bg-gray-900 border border-gray-700' : 'bg-white shadow'}`}>
+              <h2 className={`text-lg font-bold mb-4 flex items-center gap-2 ${highContrast ? 'text-yellow-400' : 'text-gray-900'}`}>
+                <FileText size={20} />
+                Proiecte Încărcate ({proiecteList.length})
+              </h2>
+
+              {loadingProiecte ? (
+                <p className={highContrast ? 'text-gray-400' : 'text-gray-500'}>Se încarcă...</p>
+              ) : proiecteList.length === 0 ? (
+                <div className={`text-center py-12 ${highContrast ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <FileText size={48} className="mx-auto mb-4 opacity-50" />
+                  <p>Nu există proiecte încărcate.</p>
+                </div>
+              ) : (
+                <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                  {proiecteList.map((proiect) => (
+                    <div
+                      key={proiect.id}
+                      className={`p-4 rounded-lg ${
+                        highContrast ? 'bg-gray-800' : 'bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className={`font-medium truncate ${highContrast ? 'text-white' : 'text-gray-900'}`}>
+                              {proiect.titlu}
+                            </p>
+                          </div>
+                          {proiect.descriere && (
+                            <p className={`text-sm mb-2 ${highContrast ? 'text-gray-400' : 'text-gray-500'}`}>
+                              {proiect.descriere}
+                            </p>
+                          )}
+                          <div className="flex items-center gap-4 text-xs">
+                            <span className={highContrast ? 'text-gray-500' : 'text-gray-400'}>
+                              {new Date(proiect.data_publicare).toLocaleDateString('ro-RO')}
+                            </span>
+                            <span className={`px-2 py-0.5 rounded ${
+                              proiect.document.endsWith('.pdf')
+                                ? 'bg-red-100 text-red-700'
+                                : 'bg-blue-100 text-blue-700'
+                            }`}>
+                              {proiect.document.split('.').pop()?.toUpperCase()}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex gap-1 shrink-0">
+                          <a
+                            href={proiect.document_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className={`p-2 rounded ${highContrast ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-200 text-gray-500'}`}
+                            title="Descarcă"
+                          >
+                            <Download size={16} />
+                          </a>
+                          <button
+                            onClick={() => handleEditProiect(proiect)}
+                            className={`p-2 rounded ${highContrast ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-200 text-gray-500'}`}
+                            title="Editează"
+                          >
+                            <Pencil size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteProiect(proiect.id)}
+                            className={`p-2 rounded text-red-500 ${highContrast ? 'hover:bg-gray-700' : 'hover:bg-red-50'}`}
+                            title="Șterge"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

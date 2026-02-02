@@ -14,6 +14,7 @@ import { Economy } from './pages/Economy';
 import { Institutions } from './pages/Institutions';
 import { Announcements } from './pages/Announcements';
 import { Documents } from './pages/Documents';
+import { ProiecteDecizii } from './pages/ProiecteDecizii';
 import { AnnouncementDetail } from './pages/AnnouncementDetail';
 import { Gallery } from './pages/Gallery';
 import { Shield, MapPin, Phone, Mail, Clock, ExternalLink, Heart } from 'lucide-react';
@@ -196,6 +197,7 @@ function App() {
       '/home': 'home',
       '/administration': 'administration',
       '/documents': 'documents',
+      '/proiecte-decizii': 'proiecte-decizii',
       '/transparency': 'transparency',
       '/contact': 'contact',
       '/history': 'history',
@@ -246,6 +248,7 @@ function App() {
       '/home': 'home',
       '/administration': 'administration',
       '/documents': 'documents',
+      '/proiecte-decizii': 'proiecte-decizii',
       '/transparency': 'transparency',
       '/contact': 'contact',
       '/history': 'history',
@@ -255,7 +258,7 @@ function App() {
       '/institutions': 'institutions',
       '/gallery': 'gallery',
     };
-    
+
     const mappedView = routeMap[path];
     if (mappedView) {
       setView(mappedView);
@@ -289,6 +292,7 @@ function App() {
       'home': '/',
       'administration': '/administration',
       'documents': '/documents',
+      'proiecte-decizii': '/proiecte-decizii',
       'transparency': '/transparency',
       'contact': '/contact',
       'history': '/history',
@@ -342,6 +346,7 @@ function App() {
         '/home': 'home',
         '/administration': 'administration',
         '/documents': 'documents',
+        '/proiecte-decizii': 'proiecte-decizii',
         '/transparency': 'transparency',
         '/contact': 'contact',
         '/history': 'history',
@@ -351,11 +356,11 @@ function App() {
         '/institutions': 'institutions',
         '/gallery': 'gallery',
       };
-      
+
       const mappedView = routeMap[path] || 'home';
       setView(mappedView);
     };
-    
+
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
@@ -391,6 +396,8 @@ function App() {
           return <Administration highContrast={highContrast} />;
         case 'documents':
           return <Documents highContrast={highContrast} />;
+        case 'proiecte-decizii':
+          return <ProiecteDecizii highContrast={highContrast} />;
         case 'transparency':
           return <Transparency highContrast={highContrast} />;
         case 'contact':
