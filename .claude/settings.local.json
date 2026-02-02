@@ -7,7 +7,13 @@
       "Bash(git init:*)",
       "Bash(git add:*)",
       "Bash(npx tsc:*)",
-      "Bash(pm2 list:*)"
+      "Bash(pm2 list:*)",
+      "Bash(mysql:*)",
+      "Bash(node:*)",
+      "Bash(curl:*)",
+      "Bash(pgrep:*)",
+      "Bash(ss:*)",
+      "Bash(netstat:*)"
     ]
   }
 }

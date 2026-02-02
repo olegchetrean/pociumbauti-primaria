@@ -13,6 +13,7 @@ export type ViewState =
   | 'geography'
   | 'economy'
   | 'institutions'
+  | 'gallery'
   | 'admin'
   | 'admin-dashboard'
   | 'admin-publish-anunt'
@@ -493,4 +494,38 @@ export interface OfficialSymbols {
     culori: string[];
   };
   motto: string;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+//                         TIPURI GALERIE FOTO
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export type AlbumCategory = 
+  | 'evenimente' 
+  | 'sarbatori' 
+  | 'proiecte' 
+  | 'sat' 
+  | 'cultura' 
+  | 'sport'
+  | 'altele';
+
+export interface PhotoAlbum {
+  id: number;
+  titlu: string;
+  descriere?: string;
+  categorie: AlbumCategory;
+  cover_photo?: string;
+  photos_count: number;
+  data_creare: string;
+  vizibil: boolean;
+}
+
+export interface Photo {
+  id: number;
+  album_id: number;
+  filename: string;
+  titlu?: string;
+  descriere?: string;
+  ordine: number;
+  data_upload: string;
 }

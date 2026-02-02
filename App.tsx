@@ -15,6 +15,7 @@ import { Institutions } from './pages/Institutions';
 import { Announcements } from './pages/Announcements';
 import { Documents } from './pages/Documents';
 import { AnnouncementDetail } from './pages/AnnouncementDetail';
+import { Gallery } from './pages/Gallery';
 import { Shield, MapPin, Phone, Mail, Clock, ExternalLink, Heart } from 'lucide-react';
 import { CONTACT_INFO, USEFUL_LINKS } from './constants';
 
@@ -202,6 +203,7 @@ function App() {
       '/geography': 'geography',
       '/economy': 'economy',
       '/institutions': 'institutions',
+      '/gallery': 'gallery',
     };
     return routeMap[path] || 'home';
   };
@@ -251,6 +253,7 @@ function App() {
       '/geography': 'geography',
       '/economy': 'economy',
       '/institutions': 'institutions',
+      '/gallery': 'gallery',
     };
     
     const mappedView = routeMap[path];
@@ -293,6 +296,7 @@ function App() {
       'geography': '/geography',
       'economy': '/economy',
       'institutions': '/institutions',
+      'gallery': '/gallery',
       'announcements': '/anunturi',
       'admin': '/admin',
       'admin-dashboard': '/admin',
@@ -345,6 +349,7 @@ function App() {
         '/geography': 'geography',
         '/economy': 'economy',
         '/institutions': 'institutions',
+        '/gallery': 'gallery',
       };
       
       const mappedView = routeMap[path] || 'home';
@@ -400,6 +405,8 @@ function App() {
           return <Economy highContrast={highContrast} />;
         case 'institutions':
           return <Institutions highContrast={highContrast} />;
+        case 'gallery':
+          return <Gallery highContrast={highContrast} />;
         case 'announcements':
           return <Announcements highContrast={highContrast} setView={setView} />;
         case 'admin':

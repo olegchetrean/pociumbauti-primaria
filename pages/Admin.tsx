@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Lock, LogOut, Check, AlertTriangle, Eye, EyeOff, 
-  FileText, Clipboard, Megaphone, Image as ImageIcon, 
-  Shield, Activity, Calendar, Upload, Save, X, ArrowLeft 
+import {
+  Lock, LogOut, Check, AlertTriangle, Eye, EyeOff,
+  FileText, Clipboard, Megaphone, Image as ImageIcon,
+  Shield, Activity, Calendar, Upload, Save, X, ArrowLeft,
+  Camera, Trash2, Plus, FolderPlus, Images, Pencil
 } from 'lucide-react';
-import { ViewState } from '../types';
+import { ViewState, AlbumCategory } from '../types';
 
 interface Props { highContrast: boolean; setView: (v: ViewState) => void; }
 
+const CATEGORY_LABELS: Record<AlbumCategory, string> = {
+  evenimente: 'Evenimente',
+  sarbatori: 'Sărbători',
+  proiecte: 'Proiecte',
+  sat: 'Satul Nostru',
+  cultura: 'Cultură',
+  sport: 'Sport',
+  altele: 'Altele'
+};
+
 export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
-  const [internalView, setInternalView] = useState<'login' | 'dashboard' | 'form'>('login');
+  const [internalView, setInternalView] = useState<'login' | 'dashboard' | 'form' | 'gallery'>('login');
   const [activeForm, setActiveForm] = useState<string>('');
   
   // Login State
@@ -44,6 +55,20 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [editingAnnouncement, setEditingAnnouncement] = useState<any>(null);
+
+  // Gallery state
+  const [albums, setAlbums] = useState<any[]>([]);
+  const [loadingAlbums, setLoadingAlbums] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState<any>(null);
+  const [albumPhotos, setAlbumPhotos] = useState<any[]>([]);
+  const [albumForm, setAlbumForm] = useState({
+    titlu: '',
+    descriere: '',
+    categorie: 'altele' as AlbumCategory,
+    vizibil: true
+  });
+  const [editingAlbum, setEditingAlbum] = useState<any>(null);
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
 
   // Sync URL with internal view
   useEffect(() => {
@@ -160,6 +185,13 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
         window.history.replaceState({}, '', '/admin');
       });
   }, []);
+
+  // Fetch albums when gallery view is opened
+  useEffect(() => {
+    if (isAuthenticated && internalView === 'gallery') {
+      fetchAlbums();
+    }
+  }, [isAuthenticated, internalView]);
 
   // Fetch announcements for dashboard
   useEffect(() => {
@@ -442,6 +474,171 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
     }
   };
 
+  // Gallery functions
+  const fetchAlbums = async () => {
+    try {
+      setLoadingAlbums(true);
+      const response = await fetch('/api/gallery/admin/albums', { credentials: 'include' });
+      if (response.ok) {
+        const data = await response.json();
+        setAlbums(data.albums || []);
+      }
+    } catch (err) {
+      console.error('Error fetching albums:', err);
+    } finally {
+      setLoadingAlbums(false);
+    }
+  };
+
+  const handleCreateAlbum = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormLoading(true);
+    try {
+      let token = csrfToken;
+      if (!token) {
+        const csrfRes = await fetch('/admin/csrf', { credentials: 'include' });
+        const csrfData = await csrfRes.json();
+        token = csrfData.csrf_token;
+        setCsrfToken(token);
+      }
+
+      const endpoint = editingAlbum 
+        ? `/api/gallery/admin/albums/${editingAlbum.id}` 
+        : '/api/gallery/admin/albums';
+      
+      const response = await fetch(endpoint, {
+        method: editingAlbum ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          ...albumForm,
+          csrf_token: token
+        })
+      });
+
+      if (response.ok) {
+        showNotification(editingAlbum ? 'Albumul a fost actualizat!' : 'Albumul a fost creat!');
+        setAlbumForm({ titlu: '', descriere: '', categorie: 'altele', vizibil: true });
+        setEditingAlbum(null);
+        fetchAlbums();
+        // Refresh CSRF token after successful request
+        const csrfRes = await fetch('/admin/csrf', { credentials: 'include' });
+        const csrfData = await csrfRes.json();
+        if (csrfData.csrf_token) setCsrfToken(csrfData.csrf_token);
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Eroare la salvarea albumului');
+      }
+    } catch (err) {
+      setError('Eroare de conexiune');
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleDeleteAlbum = async (albumId: number) => {
+    if (!confirm('Sigur doriți să ștergeți acest album? Toate fotografiile vor fi șterse.')) return;
+    
+    try {
+      const response = await fetch(`/api/gallery/admin/albums/${albumId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        showNotification('Albumul a fost șters!');
+        fetchAlbums();
+        if (selectedAlbum?.id === albumId) {
+          setSelectedAlbum(null);
+          setAlbumPhotos([]);
+        }
+      }
+    } catch (err) {
+      console.error('Error deleting album:', err);
+    }
+  };
+
+  const handleSelectAlbum = async (album: any) => {
+    setSelectedAlbum(album);
+    try {
+      const response = await fetch(`/api/gallery/albums/${album.id}`, { credentials: 'include' });
+      if (response.ok) {
+        const data = await response.json();
+        setAlbumPhotos(data.photos || []);
+      }
+    } catch (err) {
+      console.error('Error fetching album photos:', err);
+    }
+  };
+
+  const handleUploadPhotos = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!selectedAlbum || !e.target.files) return;
+    
+    setUploadingPhotos(true);
+    const formData = new FormData();
+    
+    for (let i = 0; i < e.target.files.length; i++) {
+      formData.append('photos', e.target.files[i]);
+    }
+
+    try {
+      const response = await fetch(`/api/gallery/admin/albums/${selectedAlbum.id}/photos`, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAlbumPhotos([...albumPhotos, ...data.photos]);
+        showNotification(`${data.photos.length} fotografii încărcate!`);
+        fetchAlbums(); // Refresh album count
+      }
+    } catch (err) {
+      console.error('Error uploading photos:', err);
+    } finally {
+      setUploadingPhotos(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleDeletePhoto = async (photoId: number) => {
+    if (!confirm('Sigur doriți să ștergeți această fotografie?')) return;
+    
+    try {
+      const response = await fetch(`/api/gallery/admin/photos/${photoId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        setAlbumPhotos(albumPhotos.filter(p => p.id !== photoId));
+        showNotification('Fotografia a fost ștearsă!');
+        fetchAlbums();
+      }
+    } catch (err) {
+      console.error('Error deleting photo:', err);
+    }
+  };
+
+  const handleSetCover = async (photoId: number) => {
+    if (!selectedAlbum) return;
+    
+    try {
+      const response = await fetch(`/api/gallery/admin/albums/${selectedAlbum.id}/cover/${photoId}`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        showNotification('Coperta albumului a fost actualizată!');
+        fetchAlbums();
+      }
+    } catch (err) {
+      console.error('Error setting cover:', err);
+    }
+  };
+
   // --- LOGIN PAGE ---
   if (internalView === 'login') {
     return (
@@ -696,6 +893,286 @@ export const Admin: React.FC<Props> = ({ highContrast, setView }) => {
                 <Megaphone size={24} />
                 <span className="font-medium">Publică Anunț</span>
               </button>
+              <button
+                onClick={() => {
+                  setInternalView('gallery');
+                  window.history.pushState({}, '', '/admin/gallery');
+                }}
+                className={`p-4 rounded-lg border-2 border-dashed flex flex-col items-center gap-2 transition-colors ${
+                  highContrast 
+                    ? 'border-yellow-400 text-yellow-400 hover:bg-gray-800' 
+                    : 'border-green-600 text-green-600 hover:bg-green-50'
+                }`}
+              >
+                <Camera size={24} />
+                <span className="font-medium">Galerie Foto</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {notification && (
+          <div className="fixed bottom-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg z-50">
+            {notification}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // --- GALLERY VIEW ---
+  if (internalView === 'gallery') {
+    return (
+      <div className={`min-h-screen p-8 ${highContrast ? 'bg-black text-white' : 'bg-gray-50'}`}>
+        <div className="max-w-7xl mx-auto">
+          <button
+            onClick={() => {
+              setInternalView('dashboard');
+              setSelectedAlbum(null);
+              setAlbumPhotos([]);
+              window.history.pushState({}, '', '/admin/dashboard');
+            }}
+            className={`mb-4 flex items-center gap-2 ${highContrast ? 'text-yellow-400' : 'text-moldova-blue'}`}
+          >
+            <ArrowLeft size={18} />
+            Înapoi la Dashboard
+          </button>
+
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h1 className={`text-3xl font-bold ${highContrast ? 'text-yellow-400' : 'text-gray-900'}`}>
+                Galerie Foto
+              </h1>
+              <p className={`mt-2 ${highContrast ? 'text-gray-400' : 'text-gray-600'}`}>
+                Gestionați albumele și fotografiile
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left: Albums List */}
+            <div className={`p-6 rounded-lg ${highContrast ? 'bg-gray-900 border border-gray-700' : 'bg-white shadow'}`}>
+              <h2 className={`text-lg font-bold mb-4 flex items-center gap-2 ${highContrast ? 'text-yellow-400' : 'text-gray-900'}`}>
+                <Images size={20} />
+                Albume ({albums.length})
+              </h2>
+
+              {/* Create Album Form */}
+              <form onSubmit={handleCreateAlbum} className="mb-6 space-y-3">
+                <input
+                  type="text"
+                  value={albumForm.titlu}
+                  onChange={(e) => setAlbumForm({ ...albumForm, titlu: e.target.value })}
+                  placeholder="Titlu album..."
+                  className={`w-full px-3 py-2 border rounded-md text-sm ${
+                    highContrast ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300'
+                  }`}
+                  required
+                />
+                <select
+                  value={albumForm.categorie}
+                  onChange={(e) => setAlbumForm({ ...albumForm, categorie: e.target.value as AlbumCategory })}
+                  className={`w-full px-3 py-2 border rounded-md text-sm ${
+                    highContrast ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300'
+                  }`}
+                >
+                  {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+                <textarea
+                  value={albumForm.descriere}
+                  onChange={(e) => setAlbumForm({ ...albumForm, descriere: e.target.value })}
+                  placeholder="Descriere (opțional)..."
+                  rows={2}
+                  className={`w-full px-3 py-2 border rounded-md text-sm ${
+                    highContrast ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300'
+                  }`}
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="submit"
+                    disabled={formLoading}
+                    className={`flex-1 py-2 rounded-md text-sm font-medium flex items-center justify-center gap-2 ${
+                      highContrast 
+                        ? 'bg-yellow-400 text-black hover:bg-yellow-500' 
+                        : 'bg-green-600 text-white hover:bg-green-700'
+                    }`}
+                  >
+                    {editingAlbum ? <Save size={16} /> : <FolderPlus size={16} />}
+                    {editingAlbum ? 'Salvează' : 'Creează Album'}
+                  </button>
+                  {editingAlbum && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingAlbum(null);
+                        setAlbumForm({ titlu: '', descriere: '', categorie: 'altele', vizibil: true });
+                      }}
+                      className={`px-4 py-2 rounded-md text-sm ${
+                        highContrast ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-700'
+                      }`}
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
+              </form>
+
+              {/* Albums List */}
+              {loadingAlbums ? (
+                <p className={highContrast ? 'text-gray-400' : 'text-gray-500'}>Se încarcă...</p>
+              ) : albums.length === 0 ? (
+                <p className={highContrast ? 'text-gray-400' : 'text-gray-500'}>Nu există albume.</p>
+              ) : (
+                <div className="space-y-2 max-h-[500px] overflow-y-auto">
+                  {albums.map((album) => (
+                    <div
+                      key={album.id}
+                      className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                        selectedAlbum?.id === album.id
+                          ? (highContrast ? 'bg-yellow-400/20 border border-yellow-400' : 'bg-blue-50 border border-blue-200')
+                          : (highContrast ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100')
+                      }`}
+                      onClick={() => handleSelectAlbum(album)}
+                    >
+                      <div className="flex items-start gap-3">
+                        {album.cover_photo ? (
+                          <img 
+                            src={album.cover_photo} 
+                            alt="" 
+                            className="w-12 h-12 rounded object-cover"
+                          />
+                        ) : (
+                          <div className={`w-12 h-12 rounded flex items-center justify-center ${
+                            highContrast ? 'bg-gray-700' : 'bg-gray-200'
+                          }`}>
+                            <Camera size={20} className={highContrast ? 'text-gray-500' : 'text-gray-400'} />
+                          </div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className={`font-medium truncate ${highContrast ? 'text-white' : 'text-gray-900'}`}>
+                            {album.titlu}
+                          </p>
+                          <p className={`text-xs ${highContrast ? 'text-gray-400' : 'text-gray-500'}`}>
+                            {album.photos_count} fotografii • {CATEGORY_LABELS[album.categorie as AlbumCategory]}
+                          </p>
+                        </div>
+                        <div className="flex gap-1">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setEditingAlbum(album);
+                              setAlbumForm({
+                                titlu: album.titlu,
+                                descriere: album.descriere || '',
+                                categorie: album.categorie,
+                                vizibil: album.vizibil
+                              });
+                            }}
+                            className={`p-1 rounded ${highContrast ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
+                            title="Editează albumul"
+                          >
+                            <Pencil size={14} />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteAlbum(album.id);
+                            }}
+                            className={`p-1 rounded text-red-500 ${highContrast ? 'hover:bg-gray-600' : 'hover:bg-red-50'}`}
+                            title="Șterge albumul"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Right: Album Photos */}
+            <div className={`lg:col-span-2 p-6 rounded-lg ${highContrast ? 'bg-gray-900 border border-gray-700' : 'bg-white shadow'}`}>
+              {selectedAlbum ? (
+                <>
+                  <div className="flex justify-between items-center mb-4">
+                    <div>
+                      <h2 className={`text-lg font-bold ${highContrast ? 'text-yellow-400' : 'text-gray-900'}`}>
+                        {selectedAlbum.titlu}
+                      </h2>
+                      <p className={`text-sm ${highContrast ? 'text-gray-400' : 'text-gray-500'}`}>
+                        {albumPhotos.length} fotografii
+                      </p>
+                    </div>
+                    <label className={`cursor-pointer px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 ${
+                      uploadingPhotos
+                        ? 'opacity-50 cursor-not-allowed'
+                        : highContrast 
+                          ? 'bg-yellow-400 text-black hover:bg-yellow-500' 
+                          : 'bg-blue-600 text-white hover:bg-blue-700'
+                    }`}>
+                      <Upload size={16} />
+                      {uploadingPhotos ? 'Se încarcă...' : 'Încarcă Fotografii'}
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleUploadPhotos}
+                        disabled={uploadingPhotos}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+
+                  {albumPhotos.length === 0 ? (
+                    <div className={`text-center py-16 border-2 border-dashed rounded-lg ${
+                      highContrast ? 'border-gray-700 text-gray-500' : 'border-gray-200 text-gray-400'
+                    }`}>
+                      <Camera size={48} className="mx-auto mb-4 opacity-50" />
+                      <p>Albumul nu conține fotografii.</p>
+                      <p className="text-sm mt-2">Folosiți butonul "Încarcă Fotografii" pentru a adăuga.</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {albumPhotos.map((photo) => (
+                        <div 
+                          key={photo.id} 
+                          className="relative group aspect-square rounded-lg overflow-hidden"
+                        >
+                          <img
+                            src={photo.url}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                            <button
+                              onClick={() => handleSetCover(photo.id)}
+                              className="p-2 bg-white rounded-full text-blue-600 hover:bg-blue-50"
+                              title="Setează ca copertă"
+                            >
+                              <ImageIcon size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleDeletePhoto(photo.id)}
+                              className="p-2 bg-white rounded-full text-red-600 hover:bg-red-50"
+                              title="Șterge"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className={`text-center py-16 ${highContrast ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <Images size={48} className="mx-auto mb-4 opacity-50" />
+                  <p>Selectați un album din stânga pentru a vedea și gestiona fotografiile.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

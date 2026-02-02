@@ -378,7 +378,7 @@ export const ECONOMY_DATA: EconomyData = {
     ],
 
     zootehnie: [
-      { animal: "Bovine", numar: "150-200 capete", nota: "vaci de lapte, 3000-4000 litri/vacă/an" },
+      { animal: "Bovine", numar: "50-70 capete", nota: "vaci de lapte în gospodării individuale" },
       { animal: "Porcine", numar: "300-400 capete", nota: "crescuți în gospodării individuale" },
       { animal: "Păsări", numar: "5000-7000", nota: "găini ouătoare, rațe, gâște" },
       { animal: "Ovine", numar: "100-150 capete", nota: "în declin" },

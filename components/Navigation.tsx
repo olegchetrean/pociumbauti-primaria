@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, ChevronDown, Home, FileText, Building2, Eye, Briefcase, Clock, MapPin, Wheat, Phone, Shield, ExternalLink } from 'lucide-react';
+import { Menu, X, ChevronDown, Home, FileText, Building2, Eye, Briefcase, Clock, MapPin, Wheat, Phone, Shield, ExternalLink, Camera } from 'lucide-react';
 import { ViewState } from '../types';
 
 interface NavProps {
@@ -52,6 +52,7 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
       ]
     },
     { id: 'services', label: 'Servicii', icon: <Briefcase size={16} /> },
+    { id: 'gallery', label: 'Galerie', icon: <Camera size={16} /> },
     { id: 'contact', label: 'Contact', icon: <Phone size={16} /> },
   ];
 
@@ -66,6 +67,7 @@ export const Navigation: React.FC<NavProps> = ({ currentView, setView, highContr
     { id: 'transparency', label: 'Buget și Finanțe', section: 'Transparență' },
     { id: 'economy', label: 'Economie Locală', section: 'Transparență' },
     { id: 'services', label: 'Servicii Publice' },
+    { id: 'gallery', label: 'Galerie Foto' },
     { id: 'contact', label: 'Contacte' },
   ];
 
