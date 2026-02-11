@@ -13,7 +13,10 @@
       "Bash(curl:*)",
       "Bash(pgrep:*)",
       "Bash(ss:*)",
-      "Bash(netstat:*)"
+      "Bash(netstat:*)",
+      "Bash(ssh:*)",
+      "Bash(npx vite build:*)",
+      "Bash(rsync:*)"
     ]
   }
 }
